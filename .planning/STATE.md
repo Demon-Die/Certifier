@@ -3,16 +3,16 @@
 ## Current Position
 
 - **Phase:** 01-foundation
-- **Plan:** 01 (01-01-PLAN.md)
+- **Plan:** 02 (01-02-PLAN.md)
 - **Status:** COMPLETE
-- **Wave:** 1
+- **Wave:** 2
 
 ## Progress Bar
 
 ```
-Phase 01: Foundation ████░░░░░░ 33% (1/3 plans)
+Phase 01: Foundation ████████░░ 66% (2/3 plans)
   [x] 01-01-PLAN.md - Scaffold Next.js + shadcn/ui + dark theme
-  [ ] 01-02-PLAN.md - Supabase schema, migrations, RLS, Realtime
+  [x] 01-02-PLAN.md - Supabase schema, migrations, RLS, Realtime
   [ ] 01-03-PLAN.md - NextAuth.js GitHub provider, session, middleware
 
 Phase 02: Authentication & Profiles ░░░░░░░░░░ 0% (0/2 plans)
@@ -35,6 +35,9 @@ Overall: █░░░░░░░░░░ 3% (1/16 plans)
 | 2026-06-06 | sonner for toast notifications | shadcn/ui toast not yet available in base-nova registry |
 | 2026-06-06 | HSL CSS variables over OKLCH | Better browser compatibility and debugging |
 | 2026-06-06 | Dark mode default via next-themes | No flash on load with disableTransitionOnChange |
+| 2026-06-06 | @supabase/ssr for SSR clients | Replaces legacy @supabase/auth-helpers, supports Next.js App Router |
+| 2026-06-06 | RLS helper functions with SECURITY DEFINER | is_maintainer_or_admin(), is_admin() for policy reuse and performance |
+| 2026-06-06 | REPLICA IDENTITY FULL on realtime tables | Ensures UPDATE/DELETE events contain old values for subscriptions |
 
 ## Blockers
 
@@ -50,8 +53,8 @@ None
 
 ## Session Info
 
-- **Last session:** 2026-06-06T10:01:30+05:30
-- **Completed:** 01-foundation-01-PLAN.md
+- **Last session:** 2026-06-06T10:19:31Z
+- **Completed:** 01-foundation-02-PLAN.md
 - **Stopped at:** None (plan complete)
 - **Resume file:** None
 
@@ -60,3 +63,4 @@ None
 | Phase | Plan | Duration (s) | Tasks | Files | Commit |
 |-------|------|--------------|-------|-------|--------|
 | 01-foundation | 01 | 1800 | 3 | 29 | ed0bdbf |
+| 01-foundation | 02 | 3600 | 3 | 10 | 47227d7 |

@@ -13,7 +13,7 @@ A full-stack web application that automatically awards points when PRs are merge
 **Requirements:** REQ-01, REQ-02, REQ-03
 **Plans:** 3 plans (Wave 1-3)
 - [x] 01-01-PLAN.md — Scaffold Next.js + shadcn/ui + dark theme
-- [ ] 01-02-PLAN.md — Supabase schema, migrations, RLS, Realtime
+- [x] 01-02-PLAN.md — Supabase schema, migrations, RLS, Realtime
 - [ ] 01-03-PLAN.md — NextAuth.js GitHub provider, session, middleware
 
 ---
