@@ -31,7 +31,7 @@ A full-stack web application that automatically awards points when PRs are merge
 **Goal:** Build admin-only page to configure GitHub org name, tracked repo list, webhook secret; store in maintainer_settings table.
 **Requirements:** REQ-06
 **Plans:** 1 plan (Wave 1)
-- [ ] 03-01-PLAN.md — Admin settings page, form, server actions
+- [x] 03-01-PLAN.md — Admin settings page, form, server actions
 
 ---
 
@@ -39,8 +39,8 @@ A full-stack web application that automatically awards points when PRs are merge
 **Goal:** Create `/api/webhooks/github` endpoint with signature verification; parse `family:tier` labels from merged PRs; award points to PR author; log contributions.
 **Requirements:** REQ-07, REQ-08, REQ-09, REQ-10
 **Plans:** 2 plans (Wave 1-2)
-- [ ] 04-01-PLAN.md — Webhook endpoint with signature verification
-- [ ] 04-02-PLAN.md — Points calculation logic and unit tests
+- [x] 04-01-PLAN.md — Webhook endpoint with signature verification
+- [x] 04-02-PLAN.md — Points calculation logic and unit tests
 
 ---
 
@@ -48,8 +48,8 @@ A full-stack web application that automatically awards points when PRs are merge
 **Goal:** Real-time dashboard showing 5 family cards with points, progress bars to next badge tier, claimable badges; Supabase Realtime subscriptions.
 **Requirements:** REQ-11, REQ-12, REQ-13
 **Plans:** 2 plans (Wave 1-2)
-- [ ] 05-01-PLAN.md — Dashboard layout, family cards, progress bars
-- [ ] 05-02-PLAN.md — Realtime subscriptions, claimable badges section
+- [x] 05-01-PLAN.md — Dashboard layout, family cards, progress bars
+- [x] 05-02-PLAN.md — Realtime subscriptions, claimable badges section
 
 ---
 
@@ -57,8 +57,8 @@ A full-stack web application that automatically awards points when PRs are merge
 **Goal:** "Claim Badge" flow; call certifier.io API to issue credentials; store credential IDs; display embeddable badge images; handle rate limits.
 **Requirements:** REQ-14, REQ-15, REQ-16
 **Plans:** 2 plans (Wave 1-2)
-- [ ] 06-01-PLAN.md — certifier.io client, claim badge API, template IDs
-- [ ] 06-02-PLAN.md — Badge display components, rate limit handling
+- [x] 06-01-PLAN.md — certifier.io client, claim badge API, template IDs
+- [x] 06-02-PLAN.md — Badge display components, rate limit handling
 
 ---
 
@@ -66,7 +66,7 @@ A full-stack web application that automatically awards points when PRs are merge
 **Goal:** Paginated, filterable history view of all user's contributions (repo, PR title, family, tier, points, date).
 **Requirements:** REQ-17
 **Plans:** 1 plan (Wave 1)
-- [ ] 07-01-PLAN.md — Contributions table, filters, pagination
+- [x] 07-01-PLAN.md — Contributions table, filters, pagination
 
 ---
 
@@ -74,7 +74,7 @@ A full-stack web application that automatically awards points when PRs are merge
 **Goal:** Maintainer nomination/voting UI for 5 fixed special badges (quota=1 each); nomination tracking, voting, awarding.
 **Requirements:** REQ-18, REQ-19
 **Plans:** 1 plan (Wave 1)
-- [ ] 08-01-PLAN.md — Special badges page, nomination/voting UI
+- [x] 08-01-PLAN.md — Special badges page, nomination/voting UI
 
 ---
 
@@ -82,8 +82,8 @@ A full-stack web application that automatically awards points when PRs are merge
 **Goal:** Deploy to Vercel; configure all env vars; register GitHub webhook; end-to-end testing; documentation.
 **Requirements:** REQ-20
 **Plans:** 2 plans (Wave 1-2)
-- [ ] 09-01-PLAN.md — Vercel config, CI pipeline, README, env vars
-- [ ] 09-02-PLAN.md — Global error pages, seed data, E2E verification
+- [x] 09-01-PLAN.md — Vercel config, CI pipeline, README, env vars
+- [x] 09-02-PLAN.md — Global error pages, seed data, E2E verification
 
 ---
 
