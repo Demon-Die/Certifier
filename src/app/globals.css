@@ -279,6 +279,22 @@
     transition-delay: 0.3s;
   }
 
+  /* Indeterminate progress bar animation */
+  .animate-indeterminate-bar {
+    animation: indeterminate-bar 1.5s ease-in-out infinite;
+  }
+  @keyframes indeterminate-bar {
+    0% {
+      transform: translateX(-100%);
+    }
+    50% {
+      transform: translateX(200%);
+    }
+    100% {
+      transform: translateX(400%);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .reveal {
       opacity: 1;
