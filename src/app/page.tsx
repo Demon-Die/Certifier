@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { SignInButton } from '@/components/auth/sign-in-button';
 
 export default function Home() {
@@ -51,8 +52,8 @@ export default function Home() {
           <SignInButton />
           <p className="font-mono text-[11px] text-muted-foreground">
             <span className="text-primary">&gt;</span> By signing in, you agree to our{' '}
-            <span className="text-primary hover:underline cursor-pointer">Terms</span> and{' '}
-            <span className="text-primary hover:underline cursor-pointer">Privacy Policy</span>.
+            <Link href="/terms" className="text-primary hover:underline">Terms</Link> and{' '}
+            <Link href="/privacy" className="text-primary hover:underline">Privacy Policy</Link>.
           </p>
         </div>
 
