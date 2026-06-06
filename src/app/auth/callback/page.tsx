@@ -17,7 +17,7 @@ function AuthCallbackContent() {
     <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-4">
       <div className="flex flex-col items-center gap-4 text-center">
         <Loader2Icon className="size-8 animate-spin text-primary" aria-hidden="true" />
-        <p className="text-muted-foreground">Completing sign in...</p>
+        <p className="text-muted-foreground">Completing sign in…</p>
       </div>
     </div>
   );

@@ -296,7 +296,7 @@ export default function SpecialBadgesPage() {
                     onClick={handleNominate}
                     disabled={!selectedBadge || !selectedNominee || nominating}
                   >
-                    {nominating ? 'Nominating...' : 'Submit Nomination'}
+                    {nominating ? 'Nominating…' : 'Submit Nomination'}
                   </Button>
                 </div>
               </CardContent>

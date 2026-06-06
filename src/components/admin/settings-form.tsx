@@ -188,7 +188,7 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
               {isSubmitting || isLoading ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  Saving...
+                  Saving…
                 </>
               ) : (
                 'Save Settings'

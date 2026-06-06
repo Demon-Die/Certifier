@@ -137,7 +137,7 @@ function ClaimableBadges({ userId }: { userId: string }) {
                 onClick={() => handleClaim(badge.id, badge.family, badge.tier)}
                 disabled={claiming === badge.id}
               >
-                {claiming === badge.id ? 'Claiming...' : 'Claim'}
+                {claiming === badge.id ? 'Claiming…' : 'Claim'}
               </Button>
             </div>
           );
@@ -224,7 +224,7 @@ export default function DashboardPage() {
       <div className="container mx-auto py-16 px-4 text-center">
         <Loader2 className="h-8 w-8 animate-spin mx-auto text-primary" />
         <p className="font-mono text-sm text-muted-foreground mt-4">
-          <span className="text-primary">{'>'}</span> Loading profile...
+          <span className="text-primary">{'>'}</span> Loading profile…
         </p>
       </div>
     );

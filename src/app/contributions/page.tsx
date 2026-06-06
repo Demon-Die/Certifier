@@ -133,7 +133,7 @@ export default function ContributionsPage() {
             <div className="flex items-center gap-2">
               <Search className="h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search PR title..."
+                placeholder="Search PR title…"
                 value={searchQuery}
                 onChange={(e) => {
                   setSearchQuery(e.target.value);
