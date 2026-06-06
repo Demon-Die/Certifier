@@ -23,7 +23,7 @@ A full-stack web application that automatically awards points when PRs are merge
 **Requirements:** REQ-04, REQ-05
 **Plans:** 2 plans (Wave 1-2)
 - [x] 02-01-PLAN.md — Sign-in page, user menu, auth UI
-- [ ] 02-02-PLAN.md — Role-based access, profile management, route guards
+- [x] 02-02-PLAN.md — Role-based access, profile management, route guards
 
 ---
 

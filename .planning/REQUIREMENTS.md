@@ -8,7 +8,7 @@
 | REQ-02 | Supabase project with all tables, RLS policies, Realtime enabled | ⬜ PENDING | 01-foundation | 01-02 | - |
 | REQ-03 | NextAuth.js with GitHub provider, session stores GitHub access token | ⬜ PENDING | 01-foundation | 01-03 | - |
 | REQ-04 | GitHub OAuth flow works, profiles auto-created on first sign-in | ✅ COMPLETE | 02-auth-profiles | 02-01 | 6044b78, 3ed3d9b, dda7936 |
-| REQ-05 | Role-based access: contributor / maintainer / admin | ⬜ PENDING | 02-auth-profiles | 02-02 | - |
+| REQ-05 | Role-based access: contributor / maintainer / admin | ✅ COMPLETE | 02-auth-profiles | 02-02 | c24019d, b3a19c4, e091a9f, fecd2d1 |
 | REQ-06 | Admin page: configure org name, tracked repos, webhook secret | ⬜ PENDING | 03-admin-config | 03-01 | - |
 | REQ-07 | `/api/webhooks/github` endpoint with HMAC signature verification | ⬜ PENDING | 04-webhook-points | 04-01 | - |
 | REQ-08 | Parse `family:tier` labels from merged PRs | ⬜ PENDING | 04-webhook-points | 04-02 | - |
@@ -33,7 +33,7 @@
 | REQ-02 | (pending) | (pending) | (pending) |
 | REQ-03 | (pending) | (pending) | (pending) |
 | REQ-04 | src/app/auth/signin/page.tsx, src/components/auth/sign-in-button.tsx, src/components/auth/user-menu.tsx, src/app/auth/callback/page.tsx, src/lib/auth-options.ts, src/middleware.ts | Build + TypeScript | 02-auth-profiles-01-SUMMARY.md |
-| REQ-05 | (pending) | (pending) | (pending) |
+| REQ-05 | src/lib/rbac.ts, src/lib/auth-guards.ts, src/middleware.ts, src/components/auth/role-guard.tsx, src/app/admin/page.tsx, src/app/dashboard/page.tsx | Build + TypeScript | 02-auth-profiles-02-SUMMARY.md |
 | REQ-06 | (pending) | (pending) | (pending) |
 | REQ-07 | (pending) | (pending) | (pending) |
 | REQ-08 | (pending) | (pending) | (pending) |
@@ -53,6 +53,6 @@
 ## Completion Summary
 
 - **Total Requirements:** 20
-- **Completed:** 2 (10%)
+- **Completed:** 3 (15%)
 - **In Progress:** 0
-- **Pending:** 18
+- **Pending:** 17

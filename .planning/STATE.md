@@ -3,9 +3,9 @@
 ## Current Position
 
 - **Phase:** 02-auth-profiles
-- **Plan:** 01 (02-01-PLAN.md)
+- **Plan:** 02 (02-02-PLAN.md)
 - **Status:** COMPLETE
-- **Wave:** 1
+- **Wave:** 2
 
 ## Progress Bar
 
@@ -15,9 +15,9 @@ Phase 01: Foundation ██████████ 100% (3/3 plans)
   [x] 01-02-PLAN.md - Supabase schema, migrations, RLS, Realtime
   [x] 01-03-PLAN.md - NextAuth.js GitHub provider, session, middleware
 
-Phase 02: Authentication & Profiles █████░░░░░ 50% (1/2 plans)
+Phase 02: Authentication & Profiles ████████░░ 100% (2/2 plans)
   [x] 02-01-PLAN.md - Sign-in page, user menu, auth UI
-  [ ] 02-02-PLAN.md - Profile page, role management, avatar upload
+  [x] 02-02-PLAN.md - Role-based access, profile management, route guards
 
 Phase 03: Admin Configuration ░░░░░░░░░░ 0% (0/1 plans)
 Phase 04: GitHub Webhook & Points Engine ░░░░░░░░░░ 0% (0/2 plans)
@@ -27,7 +27,7 @@ Phase 07: Contributions History ░░░░░░░░░░ 0% (0/1 plans)
 Phase 08: Special Badges ░░░░░░░░░░ 0% (0/1 plans)
 Phase 09: Deployment & Polish ░░░░░░░░░░ 0% (0/2 plans)
 
-Overall: ████░░░░░░░ 19% (3/16 plans)
+Overall: █████░░░░░░ 25% (4/16 plans)
 ```
 
 ## Decisions
@@ -47,6 +47,9 @@ Overall: ████░░░░░░░ 19% (3/16 plans)
 | 2026-06-06 | Split auth utilities into server/client files | auth.ts for server (getServerSession), auth-client.ts for client (signOut) |
 | 2026-06-06 | Inline SVG for GitHub icon | lucide-react doesn't include GitHub logo |
 | 2026-06-06 | Role badge variants: contributor=secondary, maintainer=default, admin=destructive | Visual hierarchy for role display in UserMenu |
+| 2026-06-06 | Split RBAC into edge-compatible (rbac.ts) and server-only (auth-guards.ts) | Avoid Edge Runtime issues with getServerSession in middleware bundle |
+| 2026-06-06 | Middleware uses canAccess() for server-side enforcement | Primary security layer; RoleGuard is defense-in-depth only |
+| 2026-06-06 | Admin page uses requireAdmin() guard | Server-side redirect for non-admins before rendering |
 
 ## Blockers
 
@@ -67,11 +70,14 @@ None
 | 2026-06-06 | 02-01 | lucide-react missing GitHub icon | FIXED - used inline SVG |
 | 2026-06-06 | 02-01 | @base-ui/react DropdownMenuTrigger doesn't support asChild | FIXED - removed asChild prop |
 | 2026-06-06 | 02-01 | useSearchParams requires Suspense boundary | FIXED - added Suspense wrapper |
+| 2026-06-06 | 02-02 | Edge Runtime error from getServerSession in middleware bundle | FIXED - split rbac.ts and auth-guards.ts |
+| 2026-06-06 | 02-02 | Prettier formatting and unused imports | FIXED - ran prettier --write, removed unused imports |
+| 2026-06-06 | 02-02 | Github icon not exported from lucide-react | FIXED - replaced with GitBranch icon |
 
 ## Session Info
 
 - **Last session:** 2026-06-06T11:45:00Z
-- **Completed:** 02-auth-profiles-01-PLAN.md
+- **Completed:** 02-auth-profiles-02-PLAN.md
 - **Stopped at:** None (plan complete)
 - **Resume file:** None
 
@@ -83,3 +89,4 @@ None
 | 01-foundation | 02 | 3600 | 3 | 10 | 47227d7 |
 | 01-foundation | 03 | 3635 | 3 | 10 | 9875957, 62664b0 |
 | 02-auth-profiles | 01 | 2700 | 3 | 8 | 6044b78, 3ed3d9b, dda7936, 212deb2 |
+| 02-auth-profiles | 02 | 180 | 3 | 6 | c24019d, b3a19c4, e091a9f, fecd2d1 |
