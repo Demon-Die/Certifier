@@ -289,6 +289,10 @@ export type Database = {
         Args: Record<PropertyKey, never>;
         Returns: boolean;
       };
+      increment_points: {
+        Args: { p_user_id: string; p_column: string; p_points: number };
+        Returns: unknown;
+      };
     };
     Enums: {
       user_role: 'contributor' | 'maintainer' | 'admin';
