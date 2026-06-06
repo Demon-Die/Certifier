@@ -28,6 +28,8 @@ export const authOptions: AuthOptions = {
           image: profile.avatar_url,
           githubUsername: profile.login,
           githubId: profile.id,
+          githubAccessToken: '',
+          role: 'contributor' as const,
         };
       },
     }),
@@ -62,7 +64,7 @@ export const authOptions: AuthOptions = {
     async jwt({ token, account, profile, trigger }) {
       // Initial sign in - store GitHub access token and profile info
       const githubProfile = profile as GithubProfile | undefined;
-      if (account && githubProfile) {
+      if (account && githubProfile && account.access_token) {
         token.githubAccessToken = account.access_token;
         token.githubId = githubProfile.id;
         token.githubUsername = githubProfile.login;
