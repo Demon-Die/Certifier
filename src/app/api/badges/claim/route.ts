@@ -3,7 +3,9 @@ import { auth } from '@/lib/auth';
 import { createServerClient } from '@/lib/supabase/server';
 import { claimBadge } from '@/lib/certifier';
 import { getTemplateGroupId, getBadgeDisplayName, CERTIFIER_IS_CONFIGURED } from '@/lib/badges';
-import { isValidFamily, isValidTier, type Family, type Tier } from '@/lib/points';
+import { type Family, type Tier } from '@/lib/points';
+import { claimBadgeSchema } from '@/lib/validations';
+import { ZodError } from 'zod';
 
 export async function POST(request: NextRequest) {
   const session = await auth();
@@ -11,16 +13,17 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const body: { family?: string; tier?: string } = await request.json();
+  let body: { family: string; tier: string };
+  try {
+    body = claimBadgeSchema.parse(await request.json());
+  } catch (error) {
+    if (error instanceof ZodError) {
+      return NextResponse.json({ error: error.issues }, { status: 400 });
+    }
+    return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
+  }
+
   const { family, tier } = body;
-
-  if (!family || !tier) {
-    return NextResponse.json({ error: 'family and tier are required' }, { status: 400 });
-  }
-
-  if (!isValidFamily(family) || !isValidTier(tier)) {
-    return NextResponse.json({ error: 'Invalid family or tier' }, { status: 400 });
-  }
 
   // Verify badge is available for this user
   const supabase = createServerClient();

@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { createServerClient } from '@/lib/supabase/server';
+import { voteSchema } from '@/lib/validations';
+import { ZodError } from 'zod';
 
 export async function POST(request: Request) {
   const session = await auth();
@@ -13,12 +15,17 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Only maintainers and admins can vote' }, { status: 403 });
   }
 
-  const body: { nominationId?: string } = await request.json();
-  const { nominationId } = body;
-
-  if (!nominationId) {
-    return NextResponse.json({ error: 'nominationId is required' }, { status: 400 });
+  let body: { nominationId: string };
+  try {
+    body = voteSchema.parse(await request.json());
+  } catch (error) {
+    if (error instanceof ZodError) {
+      return NextResponse.json({ error: error.issues }, { status: 400 });
+    }
+    return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
   }
+
+  const { nominationId } = body;
 
   const supabase = createServerClient();
 
