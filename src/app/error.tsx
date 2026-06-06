@@ -15,16 +15,35 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="container mx-auto py-16 px-4 text-center">
-      <h1 className="text-4xl font-bold mb-4">Something went wrong</h1>
-      <p className="text-muted-foreground mb-8 max-w-md mx-auto">
-        An unexpected error occurred. Please try again or contact support if the problem persists.
-      </p>
-      <div className="flex justify-center gap-4">
-        <Button onClick={() => reset()}>Try again</Button>
-        <Button variant="outline" onClick={() => (window.location.href = '/dashboard')}>
-          Go to Dashboard
-        </Button>
+    <div className="min-h-screen flex items-center justify-center p-gutter-mobile md:p-gutter">
+      <div className="w-full max-w-xl">
+        {/* Terminal error window */}
+        <div className="terminal-window">
+          <div className="terminal-titlebar">
+            <span className="terminal-dot" aria-hidden="true" />
+            <span className="terminal-dot" aria-hidden="true" />
+            <span className="terminal-dot bg-destructive" aria-hidden="true" />
+            <span className="ml-auto text-destructive text-[10px]">SYS_ERROR // UNHANDLED</span>
+          </div>
+          <div className="terminal-content space-y-3">
+            <p className="text-destructive text-xl font-bold font-mono tracking-widest">
+              ERR_UNKNOWN
+            </p>
+            <p>
+              <span className="text-primary">&gt;</span> Encountered an unexpected system fault.
+            </p>
+            <p className="text-on-surface-variant text-[11px]">
+              Try restarting the operation or return to a known good state.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-6 flex gap-4 justify-center">
+          <Button onClick={() => reset()}>Retry Operation</Button>
+          <Button variant="outline" onClick={() => (window.location.href = '/dashboard')}>
+            Go to Dashboard
+          </Button>
+        </div>
       </div>
     </div>
   );

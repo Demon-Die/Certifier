@@ -66,9 +66,9 @@ export default function PrivacyPage() {
       {/* Terminal window */}
       <div className="terminal-window max-w-3xl mx-auto">
         <div className="terminal-titlebar">
-          <span className="terminal-dot" />
-          <span className="terminal-dot" />
-          <span className="terminal-dot" />
+          <span className="terminal-dot" aria-hidden="true" />
+          <span className="terminal-dot" aria-hidden="true" />
+          <span className="terminal-dot" aria-hidden="true" />
           <span className="ml-auto text-on-surface-variant text-2xs">PRIVACY_POLICY.md</span>
         </div>
         <div className="terminal-content space-y-6">

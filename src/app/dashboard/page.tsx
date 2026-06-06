@@ -124,7 +124,9 @@ function ClaimableBadges({ userId }: { userId: string }) {
               className="flex items-center justify-between p-3 bg-muted/50 border border-surface-container glow-hover hover:border-primary"
             >
               <div className="flex items-center gap-3">
-                <span className="text-2xl" aria-hidden="true">{config.emoji}</span>
+                <span className="text-2xl" aria-hidden="true">
+                  {config.emoji}
+                </span>
                 <div>
                   <p className="font-mono text-sm font-medium">
                     {config.name} - {badge.tier}
@@ -154,9 +156,9 @@ function RoleBadge({ role }: { role: string }) {
     contributor: 'secondary',
   };
   const icons: Record<string, React.ReactNode> = {
-    admin: <Shield className="h-3 w-3" />,
-    maintainer: <Star className="h-3 w-3" />,
-    contributor: <User className="h-3 w-3" />,
+    admin: <Shield className="h-3 w-3" aria-hidden="true" />,
+    maintainer: <Star className="h-3 w-3" aria-hidden="true" />,
+    contributor: <User className="h-3 w-3" aria-hidden="true" />,
   };
   return (
     <Badge variant={variants[role] || 'secondary'} className="gap-1 font-mono">
@@ -237,7 +239,10 @@ export default function DashboardPage() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse inline-block" aria-hidden="true" />
+              <span
+                className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse inline-block"
+                aria-hidden="true"
+              />
               <span className="font-mono text-[11px] text-muted-foreground tracking-widest uppercase">
                 USER_DASHBOARD
               </span>
@@ -262,7 +267,7 @@ export default function DashboardPage() {
           <div className="grid gap-4 md:grid-cols-4 mb-8">
             <div className="md:col-span-1 flex items-center gap-4 p-4 bg-card border border-surface-container glow-hover hover:border-primary">
               <div className="p-3 border border-primary rounded-full bg-primary/10">
-                <GitBranch className="h-5 w-5 text-primary" />
+                <GitBranch className="h-5 w-5 text-primary" aria-hidden="true" />
               </div>
               <div>
                 <p className="font-mono text-[11px] text-muted-foreground tracking-widest uppercase">
@@ -273,7 +278,7 @@ export default function DashboardPage() {
             </div>
             <div className="md:col-span-2 flex items-center gap-4 p-4 bg-card border border-surface-container glow-hover hover:border-primary">
               <div className="p-3 border border-success rounded-full bg-success/10">
-                <Award className="h-5 w-5 text-success" />
+                <Award className="h-5 w-5 text-success" aria-hidden="true" />
               </div>
               <div>
                 <p className="font-mono text-[11px] text-muted-foreground tracking-widest uppercase">
@@ -284,7 +289,7 @@ export default function DashboardPage() {
             </div>
             <div className="md:col-span-1 flex items-center gap-4 p-4 bg-card border border-surface-container glow-hover hover:border-primary">
               <div className="p-3 border border-warning rounded-full bg-warning/10">
-                <Star className="h-5 w-5 text-warning" />
+                <Star className="h-5 w-5 text-warning" aria-hidden="true" />
               </div>
               <div>
                 <p className="font-mono text-[11px] text-muted-foreground tracking-widest uppercase">
@@ -307,14 +312,14 @@ export default function DashboardPage() {
                 href="/special-badges"
                 className="font-mono text-xs text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
               >
-                <Trophy className="h-3.5 w-3.5" />
+                <Trophy className="h-3.5 w-3.5" aria-hidden="true" />
                 Special badges
               </a>
               <a
                 href="/contributions"
                 className="font-mono text-xs text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
               >
-                <GitCommit className="h-3.5 w-3.5" />
+                <GitCommit className="h-3.5 w-3.5" aria-hidden="true" />
                 Contributions
               </a>
             </div>

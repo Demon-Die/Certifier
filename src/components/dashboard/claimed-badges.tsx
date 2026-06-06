@@ -75,7 +75,7 @@ export function ClaimedBadges({ userId }: { userId: string }) {
     <Card>
       <CardHeader>
         <CardTitle className="text-lg flex items-center gap-2">
-          <Award className="h-5 w-5" />
+          <Award className="h-5 w-5" aria-hidden="true" />
           Claimed Badges ({claimed.length})
         </CardTitle>
       </CardHeader>
@@ -89,12 +89,20 @@ export function ClaimedBadges({ userId }: { userId: string }) {
                 key={badge.id}
                 className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg border"
               >
-                <span className="text-2xl" aria-hidden="true">{config.emoji}</span>
+                <span className="text-2xl" aria-hidden="true">
+                  {config.emoji}
+                </span>
                 <div className="flex-1 min-w-0">
                   <p className="font-medium text-sm truncate">{name}</p>
                   <p className="text-xs text-muted-foreground">
                     Claimed{' '}
-                    {badge.claimed_at ? new Date(badge.claimed_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : ''}
+                    {badge.claimed_at
+                      ? new Date(badge.claimed_at).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric',
+                        })
+                      : ''}
                   </p>
                   {badge.certifier_credential_id && (
                     <a
@@ -103,7 +111,7 @@ export function ClaimedBadges({ userId }: { userId: string }) {
                       rel="noopener noreferrer"
                       className="text-xs text-primary flex items-center gap-1 mt-1 hover:underline"
                     >
-                      <ExternalLink className="h-3 w-3" />
+                      <ExternalLink className="h-3 w-3" aria-hidden="true" />
                       View credential
                     </a>
                   )}

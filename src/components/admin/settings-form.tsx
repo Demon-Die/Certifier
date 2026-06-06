@@ -168,7 +168,11 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
                 aria-label={showSecret ? 'Hide secret' : 'Show secret'}
                 aria-pressed={showSecret}
               >
-                {showSecret ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                {showSecret ? (
+                  <EyeOff className="h-4 w-4" aria-hidden="true" />
+                ) : (
+                  <Eye className="h-4 w-4" aria-hidden="true" />
+                )}
               </Button>
             </div>
             {errors.webhook_secret && (
@@ -187,7 +191,7 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
             <Button type="submit" disabled={isSubmitting || isLoading} className="gap-2">
               {isSubmitting || isLoading ? (
                 <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
                   Saving…
                 </>
               ) : (

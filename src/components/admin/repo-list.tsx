@@ -94,7 +94,7 @@ export function RepoList({ repos, onChange, errors = [] }: RepoListProps) {
       <div className="flex items-center justify-between">
         <Label className="mb-0">Tracked Repositories</Label>
         <Button variant="outline" size="sm" onClick={handleAddRepo} className="gap-1">
-          <Plus className="h-4 w-4" />
+          <Plus className="h-4 w-4" aria-hidden="true" />
           Add Repository
         </Button>
       </div>
@@ -118,7 +118,7 @@ export function RepoList({ repos, onChange, errors = [] }: RepoListProps) {
                 id={`repo-error-${index}`}
                 className="flex items-center gap-1 text-sm text-destructive"
               >
-                <AlertCircle className="h-3.5 w-3.5" />
+                <AlertCircle className="h-3.5 w-3.5" aria-hidden="true" />
                 <span>{repoErrors[index]}</span>
               </div>
             )}
@@ -129,7 +129,7 @@ export function RepoList({ repos, onChange, errors = [] }: RepoListProps) {
               aria-label={`Remove repository ${index + 1}`}
               className="text-muted-foreground hover:text-destructive"
             >
-              <Trash2 className="h-4 w-4" />
+              <Trash2 className="h-4 w-4" aria-hidden="true" />
             </Button>
           </div>
         ))}
@@ -143,7 +143,7 @@ export function RepoList({ repos, onChange, errors = [] }: RepoListProps) {
 
       {hasErrors && (
         <div className="flex items-center gap-1 text-sm text-destructive">
-          <AlertCircle className="h-3.5 w-3.5" />
+          <AlertCircle className="h-3.5 w-3.5" aria-hidden="true" />
           <span>Please fix the errors above before saving</span>
         </div>
       )}

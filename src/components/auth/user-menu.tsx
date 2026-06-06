@@ -6,6 +6,7 @@ import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuItem,
@@ -52,7 +53,7 @@ export function UserMenu() {
         <DropdownMenuContent align="end" className="w-56">
           <div className="flex items-center gap-2 p-2">
             <div className="animate-pulse h-8 w-24 bg-muted rounded" />
-            <Loader2Icon className="size-4 animate-spin" />
+            <Loader2Icon className="size-4 animate-spin" aria-hidden="true" />
           </div>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -78,12 +79,14 @@ export function UserMenu() {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel className="font-normal">
-          <div className="flex flex-col">
-            <span className="truncate font-medium">{name}</span>
-            <span className="text-xs text-muted-foreground truncate">@{user.githubUsername}</span>
-          </div>
-        </DropdownMenuLabel>
+        <DropdownMenuGroup>
+          <DropdownMenuLabel className="font-normal">
+            <div className="flex flex-col">
+              <span className="truncate font-medium">{name}</span>
+              <span className="text-xs text-muted-foreground truncate">@{user.githubUsername}</span>
+            </div>
+          </DropdownMenuLabel>
+        </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="flex items-center justify-between gap-2 px-1.5">
           <span className="text-sm text-muted-foreground">Role</span>

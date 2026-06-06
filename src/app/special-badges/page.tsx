@@ -216,11 +216,14 @@ export default function SpecialBadgesPage() {
                     </div>
                     {isAwarded && (
                       <div className="flex items-center gap-2 p-2 bg-background rounded border mt-2">
-                        <Award className="h-4 w-4 text-amber-500" />
+                        <Award className="h-4 w-4 text-amber-500" aria-hidden="true" />
                         <span className="text-sm font-medium">
                           {nominee?.github_username || 'Unknown'}
                         </span>
-                        <CheckCircle2 className="h-4 w-4 text-green-500 ml-auto" />
+                        <CheckCircle2
+                          className="h-4 w-4 text-green-500 ml-auto"
+                          aria-hidden="true"
+                        />
                       </div>
                     )}
                     {isMaintainerOrAdmin && !isAwarded && (
@@ -233,7 +236,7 @@ export default function SpecialBadgesPage() {
                         )}
                         onClick={() => setSelectedBadge(badge.id)}
                       >
-                        <UserPlus className="h-4 w-4 mr-1" />
+                        <UserPlus className="h-4 w-4 mr-1" aria-hidden="true" />
                         Nominate
                       </Button>
                     )}
@@ -311,7 +314,7 @@ export default function SpecialBadgesPage() {
             <Card>
               <CardHeader>
                 <CardTitle className="text-lg flex items-center gap-2">
-                  <Vote className="h-5 w-5" />
+                  <Vote className="h-5 w-5" aria-hidden="true" />
                   Nominations & Voting
                 </CardTitle>
               </CardHeader>
@@ -351,16 +354,16 @@ export default function SpecialBadgesPage() {
                             onClick={() => handleVote(nom.id)}
                           >
                             {voting === nom.id ? (
-                              <Loader2 className="h-4 w-4 animate-spin" />
+                              <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
                             ) : (
-                              <Vote className="h-4 w-4 mr-1" />
+                              <Vote className="h-4 w-4 mr-1" aria-hidden="true" />
                             )}
                             Vote
                           </Button>
                         )}
                         {nom.nominated_by === session.user.id && (
                           <Badge variant="secondary" className="text-xs">
-                            <Clock className="h-3 w-3 mr-1" />
+                            <Clock className="h-3 w-3 mr-1" aria-hidden="true" />
                             Your nomination
                           </Badge>
                         )}

@@ -105,7 +105,10 @@ export default function ContributionsPage() {
     <div className="min-h-screen px-gutter-mobile md:px-gutter py-8 max-w-container-max mx-auto">
       <div className="mb-8 border-b border-surface-container pb-6">
         <div className="flex items-center gap-2 mb-1">
-          <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse inline-block" aria-hidden="true" />
+          <span
+            className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse inline-block"
+            aria-hidden="true"
+          />
           <span className="font-mono text-[11px] text-muted-foreground tracking-widest uppercase">
             CONTRIBUTION_LOG
           </span>
@@ -131,7 +134,7 @@ export default function ContributionsPage() {
         <CardContent>
           <div className="flex flex-wrap gap-3">
             <div className="flex items-center gap-2">
-              <Search className="h-4 w-4 text-muted-foreground" />
+              <Search className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
               <Input
                 placeholder="Search PR title…"
                 value={searchQuery}
@@ -204,7 +207,7 @@ export default function ContributionsPage() {
             </div>
           ) : contributions.length === 0 ? (
             <div className="text-center py-12 text-muted-foreground">
-              <GitCommit className="h-12 w-12 mx-auto mb-3 opacity-30" />
+              <GitCommit className="h-12 w-12 mx-auto mb-3 opacity-30" aria-hidden="true" />
               <p>No contributions found{searchQuery ? ' matching your search' : ''}.</p>
               <p className="text-sm mt-1">
                 Merge a PR with a <code className="bg-muted px-1 rounded">family:tier</code> label
@@ -242,7 +245,9 @@ export default function ContributionsPage() {
                           </p>
                         </TableCell>
                         <TableCell>
-                          <span className="text-lg" aria-hidden="true">{config.emoji}</span>{' '}
+                          <span className="text-lg" aria-hidden="true">
+                            {config.emoji}
+                          </span>{' '}
                           <span className="text-sm">{config.name}</span>
                         </TableCell>
                         <TableCell className="hidden sm:table-cell">
@@ -252,7 +257,11 @@ export default function ContributionsPage() {
                           +{c.points_awarded}
                         </TableCell>
                         <TableCell className="hidden md:table-cell text-sm text-muted-foreground">
-                          {new Date(c.merged_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                          {new Date(c.merged_at).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric',
+                          })}
                         </TableCell>
                       </TableRow>
                     );
@@ -272,7 +281,7 @@ export default function ContributionsPage() {
                       disabled={page <= 0}
                       onClick={() => setPage((p) => p - 1)}
                     >
-                      <ChevronLeft className="h-4 w-4" />
+                      <ChevronLeft className="h-4 w-4" aria-hidden="true" />
                     </Button>
                     <Button
                       variant="outline"
@@ -280,7 +289,7 @@ export default function ContributionsPage() {
                       disabled={page >= totalPages - 1}
                       onClick={() => setPage((p) => p + 1)}
                     >
-                      <ChevronRight className="h-4 w-4" />
+                      <ChevronRight className="h-4 w-4" aria-hidden="true" />
                     </Button>
                   </div>
                 </div>
