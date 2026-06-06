@@ -17,7 +17,7 @@ export default function Loading() {
               <span className="text-primary">&gt;</span> Loading profile data...
             </p>
             <p className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse inline-block" />
+              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse inline-block" aria-hidden="true" />
               <span className="text-on-surface-variant text-[11px] cursor-blink">
                 Awaiting response
               </span>

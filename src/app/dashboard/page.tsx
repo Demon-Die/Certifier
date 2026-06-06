@@ -124,7 +124,7 @@ function ClaimableBadges({ userId }: { userId: string }) {
               className="flex items-center justify-between p-3 bg-muted/50 border border-surface-container glow-hover hover:border-primary"
             >
               <div className="flex items-center gap-3">
-                <span className="text-2xl">{config.emoji}</span>
+                <span className="text-2xl" aria-hidden="true">{config.emoji}</span>
                 <div>
                   <p className="font-mono text-sm font-medium">
                     {config.name} - {badge.tier}
@@ -237,7 +237,7 @@ export default function DashboardPage() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse inline-block" />
+              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse inline-block" aria-hidden="true" />
               <span className="font-mono text-[11px] text-muted-foreground tracking-widest uppercase">
                 USER_DASHBOARD
               </span>

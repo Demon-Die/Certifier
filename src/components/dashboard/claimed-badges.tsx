@@ -5,7 +5,8 @@ import { createBrowserClient } from '@/lib/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getFamilyConfig } from '@/lib/dashboard';
 import { getBadgeDisplayName } from '@/lib/badges';
-import { Award, ExternalLink, Loader2 } from 'lucide-react';
+import { SkeletonBadgeGrid } from '@/components/ui/skeleton';
+import { Award, ExternalLink } from 'lucide-react';
 import type { Family, Tier } from '@/lib/points';
 
 interface ClaimedBadge {
@@ -49,7 +50,19 @@ export function ClaimedBadges({ userId }: { userId: string }) {
   }, [userId]);
 
   if (loading) {
-    return <Loader2 className="h-6 w-6 animate-spin mx-auto my-8" />;
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg flex items-center gap-2">
+            <Award className="h-5 w-5" />
+            Claimed Badges
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <SkeletonBadgeGrid count={6} />
+        </CardContent>
+      </Card>
+    );
   }
 
   if (badges.length === 0) return null;
@@ -76,7 +89,7 @@ export function ClaimedBadges({ userId }: { userId: string }) {
                 key={badge.id}
                 className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg border"
               >
-                <span className="text-2xl">{config.emoji}</span>
+                <span className="text-2xl" aria-hidden="true">{config.emoji}</span>
                 <div className="flex-1 min-w-0">
                   <p className="font-medium text-sm truncate">{name}</p>
                   <p className="text-xs text-muted-foreground">

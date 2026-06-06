@@ -102,17 +102,31 @@ export default function ContributionsPage() {
   }
 
   return (
-    <div className="container mx-auto py-8 px-4 max-w-6xl">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight">Contributions</h1>
-        <p className="text-muted-foreground mt-1">
-          Your PR contribution history ({totalCount} total)
-        </p>
+    <div className="min-h-screen px-gutter-mobile md:px-gutter py-8 max-w-container-max mx-auto">
+      <div className="mb-8 border-b border-surface-container pb-6">
+        <div className="flex items-center gap-2 mb-1">
+          <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse inline-block" aria-hidden="true" />
+          <span className="font-mono text-[11px] text-muted-foreground tracking-widest uppercase">
+            CONTRIBUTION_LOG
+          </span>
+        </div>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <div>
+            <h1 className="font-sans text-headline text-foreground">
+              <span className="text-primary">{'>'}</span> Contributions
+            </h1>
+            <p className="font-mono text-sm text-muted-foreground mt-1">
+              Your PR contribution history ({totalCount} total)
+            </p>
+          </div>
+        </div>
       </div>
 
       <Card className="mb-6">
         <CardHeader className="pb-3">
-          <CardTitle className="text-lg">Filters</CardTitle>
+          <CardTitle className="text-lg font-mono">
+            <span className="text-primary">{'>'}</span> Filters
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex flex-wrap gap-3">
@@ -228,7 +242,7 @@ export default function ContributionsPage() {
                           </p>
                         </TableCell>
                         <TableCell>
-                          <span className="text-lg">{config.emoji}</span>{' '}
+                          <span className="text-lg" aria-hidden="true">{config.emoji}</span>{' '}
                           <span className="text-sm">{config.name}</span>
                         </TableCell>
                         <TableCell className="hidden sm:table-cell">

@@ -3,6 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ProgressBar } from '@/components/dashboard/progress-bar';
+import { Skeleton } from '@/components/ui/skeleton';
 import { getFamilyConfig, type FamilyProgress } from '@/lib/dashboard';
 import type { Family } from '@/lib/points';
 
@@ -19,7 +20,7 @@ export function FamilyCard({ family, points, progress }: FamilyCardProps) {
     <Card>
       <CardHeader className="pb-2">
         <CardTitle className="text-lg flex items-center gap-2">
-          <span>{config.emoji}</span>
+          <span aria-hidden="true">{config.emoji}</span>
           <span>{config.name}</span>
           {progress.currentTier && (
             <Badge variant="secondary" className="ml-auto text-xs">
@@ -45,5 +46,22 @@ export function FamilyCard({ family, points, progress }: FamilyCardProps) {
         </p>
       </CardContent>
     </Card>
+  );
+}
+
+export function FamilyCardSkeleton() {
+  return (
+    <div className="rounded-none border border-surface-container bg-card p-4">
+      <div className="flex items-center gap-2 pb-2">
+        <Skeleton className="h-5 w-5 shrink-0" />
+        <Skeleton className="h-4 w-28" />
+        <Skeleton className="h-4 w-12 ml-auto" />
+      </div>
+      <div className="space-y-3 pt-1">
+        <Skeleton className="h-8 w-16" />
+        <Skeleton className="h-2 w-full" />
+        <Skeleton className="h-3 w-36" />
+      </div>
+    </div>
   );
 }
