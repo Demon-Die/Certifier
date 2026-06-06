@@ -28,6 +28,9 @@ yarn-error.log*
 .env*.local
 .env
 
+# scripts (migration runner with credentials)
+scripts/
+
 # vercel
 .vercel
 
