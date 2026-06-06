@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { createServerClient } from '@/lib/supabase/server';
 import { nominateSchema } from '@/lib/validations';
-import { ZodError } from 'zod';
 
 export async function POST(request: Request) {
   const session = await auth();
@@ -18,17 +17,12 @@ export async function POST(request: Request) {
     );
   }
 
-  let body: { badgeId: string; nomineeId: string };
-  try {
-    body = nominateSchema.parse(await request.json());
-  } catch (error) {
-    if (error instanceof ZodError) {
-      return NextResponse.json({ error: error.issues }, { status: 400 });
-    }
-    return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
+  const parsed = nominateSchema.safeParse(await request.json());
+  if (!parsed.success) {
+    return NextResponse.json({ error: parsed.error.issues }, { status: 400 });
   }
 
-  const { badgeId, nomineeId } = body;
+  const { badgeId, nomineeId } = parsed.data;
 
   if (nomineeId === session.user.id) {
     return NextResponse.json({ error: 'Cannot nominate yourself' }, { status: 400 });

@@ -5,7 +5,6 @@ import { claimBadge } from '@/lib/certifier';
 import { getTemplateGroupId, getBadgeDisplayName, CERTIFIER_IS_CONFIGURED } from '@/lib/badges';
 import { type Family, type Tier } from '@/lib/points';
 import { claimBadgeSchema } from '@/lib/validations';
-import { ZodError } from 'zod';
 
 export async function POST(request: NextRequest) {
   const session = await auth();
@@ -13,17 +12,12 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  let body: { family: string; tier: string };
-  try {
-    body = claimBadgeSchema.parse(await request.json());
-  } catch (error) {
-    if (error instanceof ZodError) {
-      return NextResponse.json({ error: error.issues }, { status: 400 });
-    }
-    return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
+  const parsed = claimBadgeSchema.safeParse(await request.json());
+  if (!parsed.success) {
+    return NextResponse.json({ error: parsed.error.issues }, { status: 400 });
   }
 
-  const { family, tier } = body;
+  const { family, tier } = parsed.data;
 
   // Verify badge is available for this user
   const supabase = createServerClient();
