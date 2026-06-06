@@ -2,93 +2,70 @@
 
 ## Current Position
 
-- **Phase:** 03-admin-config
-- **Plan:** 01 (03-01-PLAN.md)
-- **Status:** COMPLETE
-- **Wave:** 1
+- **All phases:** COMPLETE
+- **Status:** SHIPPED
 
 ## Progress Bar
 
 ```
-Phase 01: Foundation ██████████ 100% (3/3 plans)
-  [x] 01-01-PLAN.md - Scaffold Next.js + shadcn/ui + dark theme
-  [x] 01-02-PLAN.md - Supabase schema, migrations, RLS, Realtime
-  [x] 01-03-PLAN.md - NextAuth.js GitHub provider, session, middleware
+Phase 01: Foundation              ██████████ 100% (3/3 plans)
+Phase 02: Authentication & Auth   ██████████ 100% (2/2 plans)
+Phase 03: Admin Configuration     ██████████ 100% (1/1 plans)
+Phase 04: Webhook & Points        ██████████ 100% (2/2 plans)
+Phase 05: Contributor Dashboard   ██████████ 100% (2/2 plans)
+Phase 06: Badge System            ██████████ 100% (2/2 plans)
+Phase 07: Contributions History   ██████████ 100% (1/1 plans)
+Phase 08: Special Badges          ██████████ 100% (1/1 plans)
+Phase 09: Deployment & Polish     ██████████ 100% (2/2 plans)
 
-Phase 02: Authentication & Profiles ████████░░ 100% (2/2 plans)
-  [x] 02-01-PLAN.md - Sign-in page, user menu, auth UI
-  [x] 02-02-PLAN.md - Role-based access, profile management, route guards
-
-Phase 03: Admin Configuration ██████████ 100% (1/1 plans)
-  [x] 03-01-PLAN.md - Admin settings page with org name, repo list, webhook secret
-
-Phase 04: GitHub Webhook & Points Engine ░░░░░░░░░░ 0% (0/2 plans)
-Phase 05: Contributor Dashboard ░░░░░░░░░░ 0% (0/2 plans)
-Phase 06: Badge System & certifier.io ░░░░░░░░░░ 0% (0/2 plans)
-Phase 07: Contributions History ░░░░░░░░░░ 0% (0/1 plans)
-Phase 08: Special Badges ░░░░░░░░░░ 0% (0/1 plans)
-Phase 09: Deployment & Polish ░░░░░░░░░░ 0% (0/2 plans)
-
-Overall: ██████░░░░░░ 31% (5/16 plans)
+Overall: ████████████████████ 100% (16/16 plans)
 ```
 
-## Decisions
+## What Was Built
+
+### Routes
+| Route | Description |
+|-------|------------|
+| `/` | Landing page |
+| `/auth/signin` | GitHub OAuth sign-in |
+| `/auth/callback` | OAuth callback handler |
+| `/dashboard` | Contributor dashboard with family cards, progress bars, claimable badges, claimed badges |
+| `/admin` | Admin settings (org name, tracked repos, webhook secret) |
+| `/contributions` | Paginated/filtered contribution history |
+| `/special-badges` | Special badges nomination & voting |
+
+### API Routes
+| Route | Method | Description |
+|-------|--------|-------------|
+| `/api/auth/[...nextauth]` | * | NextAuth GitHub OAuth |
+| `/api/webhooks/github` | POST | GitHub webhook handler (signature verification, points award) |
+| `/api/admin/settings` | GET/PUT | Admin settings CRUD |
+| `/api/badges/claim` | POST/GET | Badge claiming via certifier.io |
+| `/api/special-badges/nominate` | POST | Special badge nomination |
+| `/api/special-badges/vote` | POST | Special badge voting (3 votes = award) |
+
+### Infrastructure
+- 6 Supabase tables (profiles, contributions, badge_claims, maintainer_settings, special_badges, special_nominations)
+- RLS policies for role-based access
+- Realtime enabled for profiles + badge_claims
+- 5 SQL migrations including seed data
+- CI pipeline (GitHub Actions)
+- Vercel deployment config
+
+## Key Decisions
 
 | Date | Decision | Context |
 |------|----------|---------|
-| 2026-06-06 | shadcn/ui base-nova style with @base-ui/react | Newest shadcn/ui v4+ uses @base-ui/react primitives instead of Radix UI |
-| 2026-06-06 | sonner for toast notifications | shadcn/ui toast not yet available in base-nova registry |
-| 2026-06-06 | HSL CSS variables over OKLCH | Better browser compatibility and debugging |
-| 2026-06-06 | Dark mode default via next-themes | No flash on load with disableTransitionOnChange |
-| 2026-06-06 | @supabase/ssr for SSR clients | Replaces legacy @supabase/auth-helpers, supports Next.js App Router |
-| 2026-06-06 | RLS helper functions with SECURITY DEFINER | is_maintainer_or_admin(), is_admin() for policy reuse and performance |
-| 2026-06-06 | REPLICA IDENTITY FULL on realtime tables | Ensures UPDATE/DELETE events contain old values for subscriptions |
-| 2026-06-06 | NextAuth v4 (stable) over v5 (beta) | Production reliability for authentication |
-| 2026-06-06 | JWT session strategy with GitHub access token | Store access token server-side for future API calls |
-| 2026-06-06 | Combined middleware chain | Supabase session refresh + NextAuth authorization |
-| 2026-06-06 | Split auth utilities into server/client files | auth.ts for server (getServerSession), auth-client.ts for client (signOut) |
-| 2026-06-06 | Inline SVG for GitHub icon | lucide-react doesn't include GitHub logo |
-| 2026-06-06 | Role badge variants: contributor=secondary, maintainer=default, admin=destructive | Visual hierarchy for role display in UserMenu |
-| 2026-06-06 | Split RBAC into edge-compatible (rbac.ts) and server-only (auth-guards.ts) | Avoid Edge Runtime issues with getServerSession in middleware bundle |
-| 2026-06-06 | Middleware uses canAccess() for server-side enforcement | Primary security layer; RoleGuard is defense-in-depth only |
-| 2026-06-06 | Admin page uses requireAdmin() guard | Server-side redirect for non-admins before rendering |
+| 2026-06-06 | shadcn/ui base-nova style with @base-ui/react | Newest shadcn/ui v4+ uses @base-ui/react primitives |
+| 2026-06-06 | Dark mode default via next-themes | No flash on load, disableTransitionOnChange |
+| 2026-06-06 | NextAuth v4 (stable) over v5 (beta) | Production reliability |
+| 2026-06-06 | JWT session strategy with GitHub access token | Store access token for future API calls |
+| 2026-06-06 | Split RBAC into edge-compatible and server-only | Avoid Edge Runtime issues in middleware |
 
-## Blockers
+## Upcoming / To Do
 
-None
-
-## Issues
-
-| Date | Plan | Issue | Status |
-|------|------|-------|--------|
-| 2026-06-06 | 01-01 | `@apply border-border` compilation error | FIXED - used direct CSS |
-| 2026-06-06 | 01-01 | eslint-config-prettier missing | FIXED - installed package |
-| 2026-06-06 | 01-01 | Prettier formatting mismatch | FIXED - ran prettier --write |
-| 2026-06-06 | 01-03 | TypeScript profile callback return type mismatch | FIXED - added default githubAccessToken and role |
-| 2026-06-06 | 01-03 | NextAuth middleware Edge Runtime incompatibility | FIXED - used withAuth with internal updateSession call |
-| 2026-06-06 | 01-03 | TypeScript nextauth property missing on NextRequest | FIXED - created NextAuthRequest interface |
-| 2026-06-06 | 01-03 | account.access_token potentially undefined | FIXED - added explicit check in jwt callback |
-| 2026-06-06 | 02-01 | Server/client code mixing in auth.ts | FIXED - created separate auth-client.ts |
-| 2026-06-06 | 02-01 | lucide-react missing GitHub icon | FIXED - used inline SVG |
-| 2026-06-06 | 02-01 | @base-ui/react DropdownMenuTrigger doesn't support asChild | FIXED - removed asChild prop |
-| 2026-06-06 | 02-01 | useSearchParams requires Suspense boundary | FIXED - added Suspense wrapper |
-| 2026-06-06 | 02-02 | Edge Runtime error from getServerSession in middleware bundle | FIXED - split rbac.ts and auth-guards.ts |
-| 2026-06-06 | 02-02 | Prettier formatting and unused imports | FIXED - ran prettier --write, removed unused imports |
-| 2026-06-06 | 02-02 | Github icon not exported from lucide-react | FIXED - replaced with GitBranch icon |
-
-## Session Info
-
-- **Last session:** 2026-06-06T11:45:00Z
-- **Completed:** 02-auth-profiles-02-PLAN.md
-- **Stopped at:** None (plan complete)
-- **Resume file:** None
-
-## Performance Metrics
-
-| Phase | Plan | Duration (s) | Tasks | Files | Commit |
-|-------|------|--------------|-------|-------|--------|
-| 01-foundation | 01 | 1800 | 3 | 29 | ed0bdbf |
-| 01-foundation | 02 | 3600 | 3 | 10 | 47227d7 |
-| 01-foundation | 03 | 3635 | 3 | 10 | 9875957, 62664b0 |
-| 02-auth-profiles | 01 | 2700 | 3 | 8 | 6044b78, 3ed3d9b, dda7936, 212deb2 |
-| 02-auth-profiles | 02 | 180 | 3 | 6 | c24019d, b3a19c4, e091a9f, fecd2d1 |
+- Apply SQL migrations to Supabase project (especially `004_helper_functions.sql` for increment_points RPC)
+- Create 20 badge templates in certifier.io dashboard
+- Set `CERTIFIER_TEMPLATES` env var with template group IDs
+- Configure GitHub webhook pointing to deployed app
+- E2E verification after deployment
