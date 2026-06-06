@@ -2,7 +2,7 @@
 const nextConfig = {
   experimental: {
     serverActions: {
-      allowedOrigins: ['localhost:3000', process.env.NEXT_PUBLIC_SITE_URL].filter(Boolean),
+      allowedOrigins: [process.env.NEXT_PUBLIC_SITE_URL].filter(Boolean),
     },
     serverComponentsExternalPackages: ['@supabase/supabase-js'],
   },
