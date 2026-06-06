@@ -94,7 +94,7 @@ export function ClaimedBadges({ userId }: { userId: string }) {
                   <p className="font-medium text-sm truncate">{name}</p>
                   <p className="text-xs text-muted-foreground">
                     Claimed{' '}
-                    {badge.claimed_at ? new Date(badge.claimed_at).toLocaleDateString() : ''}
+                    {badge.claimed_at ? new Date(badge.claimed_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : ''}
                   </p>
                   {badge.certifier_credential_id && (
                     <a

@@ -252,7 +252,7 @@ export default function ContributionsPage() {
                           +{c.points_awarded}
                         </TableCell>
                         <TableCell className="hidden md:table-cell text-sm text-muted-foreground">
-                          {new Date(c.merged_at).toLocaleDateString()}
+                          {new Date(c.merged_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
                         </TableCell>
                       </TableRow>
                     );
