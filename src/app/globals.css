@@ -46,6 +46,17 @@
     --color-success: #4ade80;
     --color-warning: #f7b955;
     --color-cyan: #60e6d9;
+    --color-secondary-hover: oklch(0.73 0.11 175);
+  }
+
+  @supports (color: color-mix(in oklch, red, blue)) {
+    :root {
+      --color-secondary-hover: color-mix(
+        in oklch,
+        var(--secondary),
+        var(--foreground) 5%
+      );
+    }
   }
 
   .dark {
