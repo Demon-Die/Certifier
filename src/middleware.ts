@@ -3,6 +3,7 @@ import { withAuth } from 'next-auth/middleware';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import type { JWT } from 'next-auth/jwt';
+import { canAccess, getRequiredRole } from '@/lib/rbac';
 
 // Extend NextRequest with NextAuth properties
 interface NextAuthRequest extends NextRequest {
@@ -11,33 +12,57 @@ interface NextAuthRequest extends NextRequest {
   };
 }
 
+// Protected route prefixes that require authentication
+const PROTECTED_PREFIXES = ['/dashboard', '/admin', '/maintainer', '/api/admin', '/api/maintainer'];
+
+// Check if a path requires authentication
+function isProtectedPath(pathname: string): boolean {
+  return PROTECTED_PREFIXES.some((prefix) => pathname.startsWith(prefix));
+}
+
 // Combined middleware - run Supabase session refresh, then NextAuth auth
 export default withAuth(
   async function middleware(req: NextAuthRequest) {
     // First, run Supabase middleware to refresh session
-    await updateSession(req);
+    const supabaseResponse = await updateSession(req);
 
-    // Admin-only routes
-    const adminPaths = ['/admin'];
-    const isAdminPath = adminPaths.some((path) => req.nextUrl.pathname.startsWith(path));
+    const pathname = req.nextUrl.pathname;
 
-    const token = req.nextauth.token;
-    if (isAdminPath && token?.role !== 'admin') {
-      return NextResponse.redirect(new URL('/dashboard', req.url));
+    // Check if path is protected
+    if (!isProtectedPath(pathname)) {
+      return supabaseResponse;
     }
 
-    return NextResponse.next();
+    const token = req.nextauth.token;
+
+    // No session - redirect to sign in
+    if (!token) {
+      const signInUrl = new URL('/auth/signin', req.url);
+      signInUrl.searchParams.set('callbackUrl', pathname);
+      return NextResponse.redirect(signInUrl);
+    }
+
+    const userRole = token.role as 'contributor' | 'maintainer' | 'admin' | undefined;
+
+    // No role in token - redirect to dashboard
+    if (!userRole) {
+      return NextResponse.redirect(new URL('/dashboard?error=unauthorized', req.url));
+    }
+
+    // Check role-based access
+    if (!canAccess(userRole, pathname)) {
+      return NextResponse.redirect(new URL('/dashboard?error=unauthorized', req.url));
+    }
+
+    return supabaseResponse;
   },
   {
     callbacks: {
       authorized: ({ token, req }) => {
         // Protected routes that require authentication
-        const protectedPaths = ['/dashboard', '/admin', '/api/protected'];
-        const isProtectedPath = protectedPaths.some((path) =>
-          req.nextUrl.pathname.startsWith(path)
-        );
+        const isProtected = isProtectedPath(req.nextUrl.pathname);
 
-        if (isProtectedPath) {
+        if (isProtected) {
           return !!token;
         }
         return true;
@@ -50,5 +75,11 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/admin/:path*', '/api/protected/:path*'],
+  matcher: [
+    '/dashboard/:path*',
+    '/admin/:path*',
+    '/maintainer/:path*',
+    '/api/admin/:path*',
+    '/api/maintainer/:path*',
+  ],
 };
