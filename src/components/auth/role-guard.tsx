@@ -38,11 +38,7 @@ export function RoleGuard({ children, requiredRole, fallback = null }: RoleGuard
  * Note: Middleware handles the actual redirect. This is for client-side rendering protection.
  */
 export function requireRole(requiredRole: Role) {
-  return function RequireRoleWrapper({
-    children,
-  }: {
-    children: ReactNode;
-  }) {
+  return function RequireRoleWrapper({ children }: { children: ReactNode }) {
     return <RoleGuard requiredRole={requiredRole}>{children}</RoleGuard>;
   };
 }
@@ -50,8 +46,18 @@ export function requireRole(requiredRole: Role) {
 /**
  * Convenience component for admin-only content
  */
-export function AdminOnly({ children, fallback = null }: { children: ReactNode; fallback?: ReactNode }) {
-  return <RoleGuard requiredRole="admin" fallback={fallback}>{children}</RoleGuard>;
+export function AdminOnly({
+  children,
+  fallback = null,
+}: {
+  children: ReactNode;
+  fallback?: ReactNode;
+}) {
+  return (
+    <RoleGuard requiredRole="admin" fallback={fallback}>
+      {children}
+    </RoleGuard>
+  );
 }
 
 /**
@@ -60,6 +66,13 @@ export function AdminOnly({ children, fallback = null }: { children: ReactNode; 
 export function MaintainerOrAdmin({
   children,
   fallback = null,
-}: { children: ReactNode; fallback?: ReactNode }) {
-  return <RoleGuard requiredRole="maintainer" fallback={fallback}>{children}</RoleGuard>;
+}: {
+  children: ReactNode;
+  fallback?: ReactNode;
+}) {
+  return (
+    <RoleGuard requiredRole="maintainer" fallback={fallback}>
+      {children}
+    </RoleGuard>
+  );
 }

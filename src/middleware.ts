@@ -3,7 +3,7 @@ import { withAuth } from 'next-auth/middleware';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import type { JWT } from 'next-auth/jwt';
-import { canAccess, getRequiredRole } from '@/lib/rbac';
+import { canAccess } from '@/lib/rbac';
 
 // Extend NextRequest with NextAuth properties
 interface NextAuthRequest extends NextRequest {

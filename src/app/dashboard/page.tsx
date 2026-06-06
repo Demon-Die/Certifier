@@ -1,7 +1,7 @@
 import { auth } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
-import { Github, User, Award, Star, Shield } from 'lucide-react';
+import { GitBranch, User, Award, Star, Shield } from 'lucide-react';
 
 async function getSession() {
   const session = await auth();
@@ -48,9 +48,7 @@ export default async function DashboardPage() {
           <h1 className="text-3xl font-bold tracking-tight">
             Welcome back, {user.name || githubUsername}
           </h1>
-          <p className="text-muted-foreground mt-1">
-            Your certification dashboard
-          </p>
+          <p className="text-muted-foreground mt-1">Your certification dashboard</p>
         </div>
         <div className="flex items-center gap-2">
           <RoleBadge role={role} />
@@ -60,7 +58,7 @@ export default async function DashboardPage() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mb-8">
         <div className="flex items-center gap-4 p-4 bg-card border rounded-lg">
           <div className="p-3 bg-primary/10 rounded-full">
-            <Github className="h-6 w-6 text-primary" />
+            <GitBranch className="h-6 w-6 text-primary" />
           </div>
           <div>
             <p className="text-sm text-muted-foreground">GitHub</p>
@@ -123,8 +121,8 @@ export default async function DashboardPage() {
       <div className="mt-8 p-4 bg-muted/50 rounded-lg border">
         <p className="text-sm text-muted-foreground">
           <strong>Note:</strong> This is a placeholder for Phase 05. Full dashboard functionality
-          including certification tracking, progress visualization, and repository integration
-          will be implemented in later phases.
+          including certification tracking, progress visualization, and repository integration will
+          be implemented in later phases.
         </p>
       </div>
     </div>

@@ -1,21 +1,10 @@
-import { auth } from '@/lib/auth';
-import { redirect } from 'next/navigation';
-import { isAdmin } from '@/lib/rbac';
+import { requireAdmin } from '@/lib/auth-guards';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Shield, Users, GitBranch, Settings } from 'lucide-react';
 
-async function getSession() {
-  const session = await auth();
-  return session;
-}
-
 export default async function AdminPage() {
-  const session = await getSession();
-
   // Server-side role check - redirect if not admin
-  if (!session?.user?.role || !isAdmin(session.user.role)) {
-    redirect('/dashboard');
-  }
+  await requireAdmin();
 
   return (
     <div className="container mx-auto py-8 px-4 max-w-6xl">
@@ -103,8 +92,8 @@ export default async function AdminPage() {
       <div className="mt-8 p-4 bg-muted/50 rounded-lg border">
         <p className="text-sm text-muted-foreground">
           <strong>Note:</strong> This is a placeholder for Phase 03. Full admin functionality
-          including GitHub org/repo configuration, role management, and certification rules
-          will be implemented in the next phase.
+          including GitHub org/repo configuration, role management, and certification rules will be
+          implemented in the next phase.
         </p>
       </div>
     </div>
