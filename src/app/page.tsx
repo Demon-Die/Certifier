@@ -17,7 +17,7 @@ export default function Home() {
             <span className="terminal-dot" />
             <span className="terminal-dot" />
             <span className="terminal-dot" />
-            <span className="ml-auto text-on-surface-variant text-[10px]">certifier_auth.exe</span>
+            <span className="ml-auto text-on-surface-variant text-2xs">certifier_auth.exe</span>
           </div>
           <div className="terminal-content space-y-3">
             <p>
@@ -50,7 +50,7 @@ export default function Home() {
         {/* Action */}
         <div className="flex flex-col items-center gap-4">
           <SignInButton />
-          <p className="font-mono text-[11px] text-muted-foreground">
+          <p className="font-mono text-micro text-muted-foreground">
             <span className="text-primary">&gt;</span> By signing in, you agree to our{' '}
             <Link href="/terms" className="text-primary hover:underline">Terms</Link> and{' '}
             <Link href="/privacy" className="text-primary hover:underline">Privacy Policy</Link>.
@@ -59,7 +59,7 @@ export default function Home() {
 
         {/* Bottom status line */}
         <div className="border-t border-surface-container pt-6 text-center">
-          <p className="font-mono text-[11px] text-muted-foreground">
+          <p className="font-mono text-micro text-muted-foreground">
             <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse inline-block mr-2" />
             DemonDie Certification System v1.0.0
           </p>

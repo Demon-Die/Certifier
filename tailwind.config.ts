@@ -52,6 +52,8 @@ const config: Config = {
         mono: ['var(--font-mono)', 'JetBrains Mono', 'monospace'],
       },
       fontSize: {
+        '2xs': ['0.625rem', { lineHeight: '0.875rem' }],
+        'micro': ['0.6875rem', { lineHeight: '0.875rem' }],
         'display-lg': ['clamp(2rem, 5vw, 3.5rem)', { lineHeight: '1.1', fontWeight: '700' }],
         headline: ['1.5rem', { lineHeight: '1.2', fontWeight: '600' }],
         'headline-sm': ['1.25rem', { lineHeight: '1.2', fontWeight: '600' }],
