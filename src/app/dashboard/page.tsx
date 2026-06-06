@@ -279,7 +279,7 @@ export default function DashboardPage() {
                 <p className="font-mono text-[11px] text-muted-foreground tracking-widest uppercase">
                   Total Points
                 </p>
-                <p className="font-mono text-sm font-medium">{data.totalPoints}</p>
+                <p className="font-mono text-sm font-medium tabular-nums">{data.totalPoints}</p>
               </div>
             </div>
             <div className="md:col-span-1 flex items-center gap-4 p-4 bg-card border border-surface-container glow-hover hover:border-primary">

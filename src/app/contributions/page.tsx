@@ -248,7 +248,7 @@ export default function ContributionsPage() {
                         <TableCell className="hidden sm:table-cell">
                           <span className="capitalize text-sm">{c.tier}</span>
                         </TableCell>
-                        <TableCell className="text-right font-mono font-medium">
+                        <TableCell className="text-right font-mono font-medium tabular-nums">
                           +{c.points_awarded}
                         </TableCell>
                         <TableCell className="hidden md:table-cell text-sm text-muted-foreground">
