@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { createBrowserClient } from '@/lib/supabase/client';
 import { useSession } from 'next-auth/react';
 import { FamilyCard } from '@/components/dashboard/family-card';
+import { ClaimedBadges } from '@/components/dashboard/claimed-badges';
 import { getFamilyProgress, ALL_FAMILIES, type DashboardData } from '@/lib/dashboard';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -273,6 +274,7 @@ export default function DashboardPage() {
           </div>
 
           <ClaimableBadges userId={session.user.id} />
+          <ClaimedBadges userId={session.user.id} />
         </>
       )}
     </div>
