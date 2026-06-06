@@ -13,7 +13,6 @@ import {
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { LogOutIcon, Loader2Icon } from 'lucide-react';
-import { cn } from '@/lib/utils';
 
 function getInitials(name: string | null | undefined): string {
   if (!name) return '?';
@@ -45,7 +44,7 @@ export function UserMenu() {
   if (status === 'loading') {
     return (
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
+        <DropdownMenuTrigger>
           <Avatar className="size-8">
             <AvatarFallback className="animate-pulse">LD</AvatarFallback>
           </Avatar>
@@ -72,7 +71,7 @@ export function UserMenu() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger>
         <Avatar className="size-8 cursor-pointer hover:ring-2 hover:ring-primary transition-colors">
           <AvatarImage src={image ?? undefined} alt={name} />
           <AvatarFallback>{initials}</AvatarFallback>
@@ -82,9 +81,7 @@ export function UserMenu() {
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col">
             <span className="truncate font-medium">{name}</span>
-            <span className="text-xs text-muted-foreground truncate">
-              @{user.githubUsername}
-            </span>
+            <span className="text-xs text-muted-foreground truncate">@{user.githubUsername}</span>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
