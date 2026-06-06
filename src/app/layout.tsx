@@ -1,16 +1,22 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { JetBrains_Mono } from 'next/font/google';
+import { GeistSans } from 'geist/font/sans';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { Providers } from '@/app/providers';
 import { Header } from '@/components/layout/header';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
-  title: 'Contributor Badge Program',
-  description: 'Earn badges for your open source contributions',
+  title: '>_ Certifier | DemonDie',
+  description:
+    'Terminal-based badge system for open source contributors. Earn badges, track progress, claim credentials.',
 };
 
 export default function RootLayout({
@@ -20,7 +26,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className="dark">
-      <body className={`${inter.variable} font-sans antialiased bg-background text-foreground`}>
+      <body
+        className={`${GeistSans.variable} ${jetbrainsMono.variable} font-sans antialiased bg-background text-foreground`}
+      >
         <Providers>
           <ThemeProvider
             attribute="class"
