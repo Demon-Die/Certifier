@@ -14,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { toast } from 'sonner';
 import { Vote, UserPlus, Loader2, Award, CheckCircle2, Clock } from 'lucide-react';
 
 interface SpecialBadge {
@@ -65,7 +66,6 @@ export default function SpecialBadgesPage() {
   const [selectedNominee, setSelectedNominee] = useState<string>('');
   const [nominating, setNominating] = useState(false);
   const [voting, setVoting] = useState<string | null>(null);
-  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   const isMaintainerOrAdmin =
     session?.user?.role === 'maintainer' || session?.user?.role === 'admin';
@@ -90,7 +90,6 @@ export default function SpecialBadgesPage() {
   const handleNominate = async () => {
     if (!selectedBadge || !selectedNominee) return;
     setNominating(true);
-    setMessage(null);
 
     try {
       const res = await fetch('/api/special-badges/nominate', {
@@ -100,15 +99,15 @@ export default function SpecialBadgesPage() {
       });
       const data = await res.json();
       if (res.ok) {
-        setMessage({ type: 'success', text: 'Nomination submitted!' });
+        toast.success('Nomination submitted!');
         setSelectedBadge('');
         setSelectedNominee('');
         fetchData();
       } else {
-        setMessage({ type: 'error', text: data.error || 'Failed to nominate' });
+        toast.error(data.error || 'Failed to nominate');
       }
     } catch {
-      setMessage({ type: 'error', text: 'Failed to nominate' });
+      toast.error('Failed to nominate');
     } finally {
       setNominating(false);
     }
@@ -116,7 +115,6 @@ export default function SpecialBadgesPage() {
 
   const handleVote = async (nominationId: string) => {
     setVoting(nominationId);
-    setMessage(null);
 
     try {
       const res = await fetch('/api/special-badges/vote', {
@@ -125,14 +123,14 @@ export default function SpecialBadgesPage() {
         body: JSON.stringify({ nominationId }),
       });
       if (res.ok) {
-        setMessage({ type: 'success', text: 'Vote recorded!' });
+        toast.success('Vote recorded!');
         fetchData();
       } else {
         const data = await res.json();
-        setMessage({ type: 'error', text: data.error || 'Failed to vote' });
+        toast.error(data.error || 'Failed to vote');
       }
     } catch {
-      setMessage({ type: 'error', text: 'Failed to vote' });
+      toast.error('Failed to vote');
     } finally {
       setVoting(null);
     }
@@ -157,12 +155,24 @@ export default function SpecialBadgesPage() {
   }
 
   return (
-    <div className="container mx-auto py-8 px-4 max-w-6xl">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight">Special Badges</h1>
-        <p className="text-muted-foreground mt-1">
-          Rare badges awarded by maintainer nomination and voting
-        </p>
+    <div className="min-h-screen px-gutter-mobile md:px-gutter py-8 max-w-container-max mx-auto">
+      <div className="mb-8 border-b border-surface-container pb-6">
+        <div className="flex items-center gap-2 mb-1">
+          <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse inline-block" />
+          <span className="font-mono text-[11px] text-muted-foreground tracking-widest uppercase">
+            SPECIAL_BADGES
+          </span>
+        </div>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <div>
+            <h1 className="font-sans text-headline text-foreground">
+              <span className="text-primary">{'>'}</span> Special Badges
+            </h1>
+            <p className="font-mono text-sm text-muted-foreground mt-1">
+              Rare badges awarded by maintainer nomination and voting
+            </p>
+          </div>
+        </div>
       </div>
 
       {loading ? (
@@ -171,18 +181,6 @@ export default function SpecialBadgesPage() {
         </div>
       ) : (
         <>
-          {message && (
-            <div
-              className={`mb-6 p-3 rounded-lg text-sm ${
-                message.type === 'success'
-                  ? 'bg-green-500/10 text-green-600 border border-green-500/20'
-                  : 'bg-red-500/10 text-red-600 border border-red-500/20'
-              }`}
-            >
-              {message.text}
-            </div>
-          )}
-
           {/* Badge Cards */}
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-10">
             {badges.map((badge) => {

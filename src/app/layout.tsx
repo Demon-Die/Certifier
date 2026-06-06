@@ -4,6 +4,7 @@ import { GeistSans } from 'geist/font/sans';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import { TooltipProvider } from '@/components/ui/tooltip';
+import { Toaster } from 'sonner';
 import { Providers } from '@/app/providers';
 import { Header } from '@/components/layout/header';
 
@@ -41,6 +42,7 @@ export default function RootLayout({
                 <Header />
                 <main className="flex-1">{children}</main>
               </div>
+              <Toaster position="bottom-right" />
             </TooltipProvider>
           </ThemeProvider>
         </Providers>

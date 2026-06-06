@@ -9,7 +9,8 @@ import { getFamilyProgress, ALL_FAMILIES, type DashboardData } from '@/lib/dashb
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { GitBranch, GitCommit, Award, Star, User, Shield, Loader2, Trophy } from 'lucide-react';
+import { toast } from 'sonner';
+import { GitBranch, Award, Star, User, Shield, Loader2, Trophy, GitCommit } from 'lucide-react';
 import { getFamilyConfig } from '@/lib/dashboard';
 import type { Family } from '@/lib/points';
 
@@ -67,14 +68,14 @@ function ClaimableBadges({ userId }: { userId: string }) {
         refetchBadges();
       } else {
         const data = await res.json();
-        alert(
+        toast.error(
           data.rateLimited
             ? 'Monthly quota exceeded. Try again next month.'
             : data.error || 'Claim failed'
         );
       }
     } catch {
-      alert('Claim failed. Please try again.');
+      toast.error('Claim failed. Please try again.');
     } finally {
       setClaiming(null);
     }
@@ -94,10 +95,14 @@ function ClaimableBadges({ userId }: { userId: string }) {
     return (
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">Claimable Badges</CardTitle>
+          <CardTitle className="text-lg font-mono">
+            <span className="text-primary">{'>'}</span> Claimable Badges
+          </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground">No badges available to claim. Keep contributing!</p>
+          <p className="font-mono text-sm text-muted-foreground">
+            No badges available to claim. Keep contributing!
+          </p>
         </CardContent>
       </Card>
     );
@@ -106,7 +111,9 @@ function ClaimableBadges({ userId }: { userId: string }) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg">Claimable Badges</CardTitle>
+        <CardTitle className="text-lg font-mono">
+          <span className="text-primary">{'>'}</span> Claimable Badges
+        </CardTitle>
       </CardHeader>
       <CardContent className="space-y-3">
         {badges.map((badge) => {
@@ -114,15 +121,15 @@ function ClaimableBadges({ userId }: { userId: string }) {
           return (
             <div
               key={badge.id}
-              className="flex items-center justify-between p-3 bg-muted/50 rounded-lg"
+              className="flex items-center justify-between p-3 bg-muted/50 border border-surface-container glow-hover hover:border-primary"
             >
               <div className="flex items-center gap-3">
                 <span className="text-2xl">{config.emoji}</span>
                 <div>
-                  <p className="font-medium">
+                  <p className="font-mono text-sm font-medium">
                     {config.name} - {badge.tier}
                   </p>
-                  <p className="text-xs text-muted-foreground">Available to claim</p>
+                  <p className="font-mono text-[11px] text-muted-foreground">Available to claim</p>
                 </div>
               </div>
               <Button
@@ -152,7 +159,7 @@ function RoleBadge({ role }: { role: string }) {
     contributor: <User className="h-3 w-3" />,
   };
   return (
-    <Badge variant={variants[role] || 'secondary'} className="gap-1">
+    <Badge variant={variants[role] || 'secondary'} className="gap-1 font-mono">
       {icons[role]}
       {role.charAt(0).toUpperCase() + role.slice(1)}
     </Badge>
@@ -185,7 +192,6 @@ export default function DashboardPage() {
     };
     fetchData();
 
-    // Real-time subscription
     const supabase = createBrowserClient();
     const channel = supabase
       .channel(`profile:${session.user.id}`)
@@ -202,8 +208,10 @@ export default function DashboardPage() {
 
   if (!session?.user) {
     return (
-      <div className="container mx-auto py-8 px-4 text-center">
-        <p>Please sign in to view your dashboard.</p>
+      <div className="container mx-auto py-16 px-4 text-center">
+        <p className="font-mono text-muted-foreground">
+          <span className="text-primary">{'>'}</span> Please sign in to view your dashboard.
+        </p>
       </div>
     );
   }
@@ -213,88 +221,115 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="container mx-auto py-8 px-4 text-center">
-        <Loader2 className="h-8 w-8 animate-spin mx-auto" />
+      <div className="container mx-auto py-16 px-4 text-center">
+        <Loader2 className="h-8 w-8 animate-spin mx-auto text-primary" />
+        <p className="font-mono text-sm text-muted-foreground mt-4">
+          <span className="text-primary">{'>'}</span> Loading profile...
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto py-8 px-4 max-w-6xl">
-      <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">
-            Welcome back, {session.user.name || githubUsername}
-          </h1>
-          <p className="text-muted-foreground mt-1">Your contribution dashboard</p>
-        </div>
-        <div className="flex items-center gap-2">
-          <RoleBadge role={role} />
+    <div className="min-h-screen px-gutter-mobile md:px-gutter py-8 max-w-container-max mx-auto">
+      {/* Terminal header */}
+      <div className="mb-8 border-b border-surface-container pb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse inline-block" />
+              <span className="font-mono text-[11px] text-muted-foreground tracking-widest uppercase">
+                USER_DASHBOARD
+              </span>
+            </div>
+            <h1 className="font-sans text-headline text-foreground">
+              Welcome back,{' '}
+              <span className="text-primary">{session.user.name || githubUsername}</span>
+            </h1>
+            <p className="font-mono text-sm text-muted-foreground mt-1">
+              <span className="text-primary">{'>'}</span> Your contribution dashboard
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <RoleBadge role={role} />
+          </div>
         </div>
       </div>
 
       {data && (
         <>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mb-8">
-            <div className="flex items-center gap-4 p-4 bg-card border rounded-lg">
-              <div className="p-3 bg-primary/10 rounded-full">
-                <GitBranch className="h-6 w-6 text-primary" />
+          {/* Stats cards */}
+          <div className="grid gap-4 md:grid-cols-4 mb-8">
+            <div className="md:col-span-1 flex items-center gap-4 p-4 bg-card border border-surface-container glow-hover hover:border-primary">
+              <div className="p-3 border border-primary rounded-full bg-primary/10">
+                <GitBranch className="h-5 w-5 text-primary" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">GitHub</p>
-                <p className="font-medium">@{githubUsername}</p>
+                <p className="font-mono text-[11px] text-muted-foreground tracking-widest uppercase">
+                  GitHub
+                </p>
+                <p className="font-mono text-sm font-medium">@{githubUsername}</p>
               </div>
             </div>
-            <div className="flex items-center gap-4 p-4 bg-card border rounded-lg">
-              <div className="p-3 bg-emerald-500/10 rounded-full">
-                <Award className="h-6 w-6 text-emerald-600" />
+            <div className="md:col-span-2 flex items-center gap-4 p-4 bg-card border border-surface-container glow-hover hover:border-primary">
+              <div className="p-3 border border-success rounded-full bg-success/10">
+                <Award className="h-5 w-5 text-success" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Total Points</p>
-                <p className="font-medium">{data.totalPoints}</p>
+                <p className="font-mono text-[11px] text-muted-foreground tracking-widest uppercase">
+                  Total Points
+                </p>
+                <p className="font-mono text-sm font-medium">{data.totalPoints}</p>
               </div>
             </div>
-            <div className="flex items-center gap-4 p-4 bg-card border rounded-lg">
-              <div className="p-3 bg-amber-500/10 rounded-full">
-                <Star className="h-6 w-6 text-amber-600" />
+            <div className="md:col-span-1 flex items-center gap-4 p-4 bg-card border border-surface-container glow-hover hover:border-primary">
+              <div className="p-3 border border-warning rounded-full bg-warning/10">
+                <Star className="h-5 w-5 text-warning" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Families</p>
-                <p className="font-medium">
+                <p className="font-mono text-[11px] text-muted-foreground tracking-widest uppercase">
+                  Families
+                </p>
+                <p className="font-mono text-sm font-medium">
                   {data.families.filter((f) => f.points > 0).length} active
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold">Family Progress</h2>
+          {/* Family Progress section */}
+          <div className="mb-4 flex items-center justify-between border-b border-surface-container pb-3">
+            <h2 className="font-mono text-sm font-medium">
+              <span className="text-primary">{'>'}</span> Family Progress
+            </h2>
             <div className="flex items-center gap-3">
               <a
                 href="/special-badges"
-                className="text-sm text-primary hover:underline flex items-center gap-1"
+                className="font-mono text-xs text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
               >
-                <Trophy className="h-4 w-4" />
+                <Trophy className="h-3.5 w-3.5" />
                 Special badges
               </a>
               <a
                 href="/contributions"
-                className="text-sm text-primary hover:underline flex items-center gap-1"
+                className="font-mono text-xs text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
               >
-                <GitCommit className="h-4 w-4" />
+                <GitCommit className="h-3.5 w-3.5" />
                 Contributions
               </a>
             </div>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 mb-10">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 mb-10">
             {data.families.map((f) => (
               <FamilyCard key={f.family} family={f.family} points={f.points} progress={f} />
             ))}
           </div>
 
           <ClaimableBadges userId={session.user.id} />
-          <ClaimedBadges userId={session.user.id} />
+          <div className="mt-6">
+            <ClaimedBadges userId={session.user.id} />
+          </div>
         </>
       )}
     </div>
