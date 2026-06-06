@@ -12,7 +12,7 @@ A full-stack web application that automatically awards points when PRs are merge
 **Goal:** Scaffold Next.js project with TypeScript, Tailwind, shadcn/ui; set up Supabase project with migrations and RLS; configure NextAuth with GitHub provider.
 **Requirements:** REQ-01, REQ-02, REQ-03
 **Plans:** 3 plans (Wave 1-3)
-- [ ] 01-01-PLAN.md — Scaffold Next.js + shadcn/ui + dark theme
+- [x] 01-01-PLAN.md — Scaffold Next.js + shadcn/ui + dark theme
 - [ ] 01-02-PLAN.md — Supabase schema, migrations, RLS, Realtime
 - [ ] 01-03-PLAN.md — NextAuth.js GitHub provider, session, middleware
 
