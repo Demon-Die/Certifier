@@ -9,7 +9,7 @@ import { getFamilyProgress, ALL_FAMILIES, type DashboardData } from '@/lib/dashb
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { GitBranch, Award, Star, User, Shield, Loader2 } from 'lucide-react';
+import { GitBranch, GitCommit, Award, Star, User, Shield, Loader2 } from 'lucide-react';
 import { getFamilyConfig } from '@/lib/dashboard';
 import type { Family } from '@/lib/points';
 
@@ -265,6 +265,17 @@ export default function DashboardPage() {
                 </p>
               </div>
             </div>
+          </div>
+
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-semibold">Family Progress</h2>
+            <a
+              href="/contributions"
+              className="text-sm text-primary hover:underline flex items-center gap-1"
+            >
+              <GitCommit className="h-4 w-4" />
+              View all contributions
+            </a>
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 mb-10">
