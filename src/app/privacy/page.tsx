@@ -76,12 +76,8 @@ export default function PrivacyPage() {
             <p className="text-primary text-xs tracking-widest uppercase mb-1">
               DemonDie Certifier — Legal
             </p>
-            <h1 className="font-sans text-headline text-foreground">
-              Privacy Policy
-            </h1>
-            <p className="text-on-surface-variant text-xs mt-2">
-              Last updated: June 2026
-            </p>
+            <h1 className="font-sans text-headline text-foreground">Privacy Policy</h1>
+            <p className="text-on-surface-variant text-xs mt-2">Last updated: June 2026</p>
           </div>
 
           {sections.map((section, i) => (
@@ -90,9 +86,7 @@ export default function PrivacyPage() {
                 <span className="text-primary">&gt;</span>{' '}
                 <span className="text-foreground font-semibold">{section.title}</span>
               </p>
-              <p className="text-on-surface-variant ml-4 mt-1 leading-relaxed">
-                {section.content}
-              </p>
+              <p className="text-on-surface-variant ml-4 mt-1 leading-relaxed">{section.content}</p>
             </div>
           ))}
 
@@ -118,7 +112,10 @@ export default function PrivacyPage() {
       {/* Status line */}
       <div className="mt-6 text-center">
         <span className="inline-flex items-center gap-1.5 font-mono text-[10px] text-muted-foreground">
-          <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse inline-block" aria-hidden="true" />
+          <span
+            className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse inline-block"
+            aria-hidden="true"
+          />
           DemonDie Certification System — Privacy Policy
         </span>
       </div>
