@@ -3,17 +3,17 @@
 ## Current Position
 
 - **Phase:** 01-foundation
-- **Plan:** 02 (01-02-PLAN.md)
+- **Plan:** 03 (01-03-PLAN.md)
 - **Status:** COMPLETE
-- **Wave:** 2
+- **Wave:** 3
 
 ## Progress Bar
 
 ```
-Phase 01: Foundation ████████░░ 66% (2/3 plans)
+Phase 01: Foundation ██████████ 100% (3/3 plans)
   [x] 01-01-PLAN.md - Scaffold Next.js + shadcn/ui + dark theme
   [x] 01-02-PLAN.md - Supabase schema, migrations, RLS, Realtime
-  [ ] 01-03-PLAN.md - NextAuth.js GitHub provider, session, middleware
+  [x] 01-03-PLAN.md - NextAuth.js GitHub provider, session, middleware
 
 Phase 02: Authentication & Profiles ░░░░░░░░░░ 0% (0/2 plans)
 Phase 03: Admin Configuration ░░░░░░░░░░ 0% (0/1 plans)
@@ -24,7 +24,7 @@ Phase 07: Contributions History ░░░░░░░░░░ 0% (0/1 plans)
 Phase 08: Special Badges ░░░░░░░░░░ 0% (0/1 plans)
 Phase 09: Deployment & Polish ░░░░░░░░░░ 0% (0/2 plans)
 
-Overall: █░░░░░░░░░░ 3% (1/16 plans)
+Overall: ██░░░░░░░░░ 5% (2/16 plans)
 ```
 
 ## Decisions
@@ -38,6 +38,9 @@ Overall: █░░░░░░░░░░ 3% (1/16 plans)
 | 2026-06-06 | @supabase/ssr for SSR clients | Replaces legacy @supabase/auth-helpers, supports Next.js App Router |
 | 2026-06-06 | RLS helper functions with SECURITY DEFINER | is_maintainer_or_admin(), is_admin() for policy reuse and performance |
 | 2026-06-06 | REPLICA IDENTITY FULL on realtime tables | Ensures UPDATE/DELETE events contain old values for subscriptions |
+| 2026-06-06 | NextAuth v4 (stable) over v5 (beta) | Production reliability for authentication |
+| 2026-06-06 | JWT session strategy with GitHub access token | Store access token server-side for future API calls |
+| 2026-06-06 | Combined middleware chain | Supabase session refresh + NextAuth authorization |
 
 ## Blockers
 
@@ -50,11 +53,15 @@ None
 | 2026-06-06 | 01-01 | `@apply border-border` compilation error | FIXED - used direct CSS |
 | 2026-06-06 | 01-01 | eslint-config-prettier missing | FIXED - installed package |
 | 2026-06-06 | 01-01 | Prettier formatting mismatch | FIXED - ran prettier --write |
+| 2026-06-06 | 01-03 | TypeScript profile callback return type mismatch | FIXED - added default githubAccessToken and role |
+| 2026-06-06 | 01-03 | NextAuth middleware Edge Runtime incompatibility | FIXED - used withAuth with internal updateSession call |
+| 2026-06-06 | 01-03 | TypeScript nextauth property missing on NextRequest | FIXED - created NextAuthRequest interface |
+| 2026-06-06 | 01-03 | account.access_token potentially undefined | FIXED - added explicit check in jwt callback |
 
 ## Session Info
 
-- **Last session:** 2026-06-06T10:19:31Z
-- **Completed:** 01-foundation-02-PLAN.md
+- **Last session:** 2026-06-06T11:30:00Z
+- **Completed:** 01-foundation-03-PLAN.md
 - **Stopped at:** None (plan complete)
 - **Resume file:** None
 
@@ -64,3 +71,4 @@ None
 |-------|------|--------------|-------|-------|--------|
 | 01-foundation | 01 | 1800 | 3 | 29 | ed0bdbf |
 | 01-foundation | 02 | 3600 | 3 | 10 | 47227d7 |
+| 01-foundation | 03 | 3635 | 3 | 10 | 9875957, 62664b0 |
