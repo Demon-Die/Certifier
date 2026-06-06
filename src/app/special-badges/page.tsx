@@ -14,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { Vote, UserPlus, Loader2, Award, CheckCircle2, Clock } from 'lucide-react';
 
@@ -182,14 +183,17 @@ export default function SpecialBadgesPage() {
       ) : (
         <>
           {/* Badge Cards */}
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-10">
-            {badges.map((badge) => {
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-10">
+            {badges.map((badge, idx) => {
               const isAwarded = !!badge.awarded_to;
               const nominee = profiles.find((p) => p.id === badge.awarded_to);
               return (
                 <Card
                   key={badge.id}
-                  className={isAwarded ? 'border-amber-500/30 bg-amber-500/5' : ''}
+                  className={cn(
+                    idx === 0 ? 'lg:col-span-2' : '',
+                    isAwarded ? 'border-amber-500/30 bg-amber-500/5' : ''
+                  )}
                 >
                   <CardHeader className="pb-3">
                     <CardTitle className="flex items-center gap-2 text-lg">

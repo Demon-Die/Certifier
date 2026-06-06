@@ -52,8 +52,14 @@ export default function Home() {
           <SignInButton />
           <p className="font-mono text-micro text-muted-foreground">
             <span className="text-primary">&gt;</span> By signing in, you agree to our{' '}
-            <Link href="/terms" className="text-primary hover:underline">Terms</Link> and{' '}
-            <Link href="/privacy" className="text-primary hover:underline">Privacy Policy</Link>.
+            <Link href="/terms" className="text-primary hover:underline">
+              Terms
+            </Link>{' '}
+            and{' '}
+            <Link href="/privacy" className="text-primary hover:underline">
+              Privacy Policy
+            </Link>
+            .
           </p>
         </div>
 
