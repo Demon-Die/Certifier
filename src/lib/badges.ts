@@ -46,7 +46,12 @@ export function getBadgeDisplayName(family: Family, tier: Tier): string {
 
 export const CERTIFIER_IS_CONFIGURED = (() => {
   try {
-    return !!process.env.CERTIFIER_API_KEY && !!process.env.CERTIFIER_TEMPLATES;
+    const hasApiKey = !!process.env.CERTIFIER_API_KEY;
+    const templates = process.env.CERTIFIER_TEMPLATES;
+    if (!hasApiKey || !templates) return false;
+    // Only consider configured if at least one template mapping exists
+    const parsed = JSON.parse(templates);
+    return Object.keys(parsed).length > 0;
   } catch {
     return false;
   }

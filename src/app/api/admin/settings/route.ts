@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createServerClient } from '@/lib/supabase/server';
 import { auth } from '@/lib/auth';
 import { hasRole } from '@/lib/rbac';
 import { maskWebhookSecret } from '@/lib/utils/mask';
+
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
 export async function GET() {
   try {
@@ -12,19 +14,31 @@ export async function GET() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
-    const supabase = createServerClient();
-
-    const { data, error } = await supabase
-      .from('maintainer_settings')
-      .select('github_org_name, tracked_repos, webhook_secret')
-      .eq('id', 1)
-      .single();
-
-    if (error) {
-      if (error.code === 'PGRST116') {
-        return NextResponse.json({ error: 'Settings not found' }, { status: 404 });
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/maintainer_settings?id=eq.1&select=github_org_name,tracked_repos,webhook_secret`,
+      {
+        headers: { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}` },
+        cache: 'no-store',
       }
-      return NextResponse.json({ error: error.message }, { status: 500 });
+    );
+
+    if (res.status === 404 || res.status === 406) {
+      return NextResponse.json({ error: 'Settings not found' }, { status: 404 });
+    }
+    if (!res.ok) {
+      const body = await res.text();
+      return NextResponse.json({ error: body }, { status: 500 });
+    }
+
+    const rows = (await res.json()) as Array<{
+      github_org_name: string;
+      tracked_repos: unknown;
+      webhook_secret: string;
+    }>;
+    const data = rows[0];
+
+    if (!data) {
+      return NextResponse.json({ error: 'Settings not found' }, { status: 404 });
     }
 
     return NextResponse.json({
@@ -48,8 +62,8 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
-    const body = await request.json();
-    const { github_org_name, tracked_repos, webhook_secret } = body;
+    const requestBody = await request.json();
+    const { github_org_name, tracked_repos, webhook_secret } = requestBody;
 
     // Validate input
     if (!github_org_name || github_org_name.trim().length === 0) {
@@ -89,26 +103,34 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    const supabase = createServerClient();
+    const patchBody = {
+      github_org_name: github_org_name.trim(),
+      tracked_repos: tracked_repos.map((r: string) => r.trim()),
+      webhook_secret,
+    };
 
-    const { data, error } = await supabase
-      .from('maintainer_settings')
-      .upsert(
-        {
-          id: 1,
-          github_org_name: github_org_name.trim(),
-          tracked_repos: tracked_repos.map((r: string) => r.trim()),
-          webhook_secret,
-          updated_by: session.user.id,
-        },
-        { onConflict: 'id' }
-      )
-      .select('github_org_name, tracked_repos, webhook_secret')
-      .single();
+    const patchRes = await fetch(`${SUPABASE_URL}/rest/v1/maintainer_settings?id=eq.1`, {
+      method: 'PATCH',
+      headers: {
+        apikey: SERVICE_KEY,
+        Authorization: `Bearer ${SERVICE_KEY}`,
+        'Content-Type': 'application/json',
+        Prefer: 'return=representation',
+      },
+      body: JSON.stringify(patchBody),
+    });
 
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+    if (!patchRes.ok) {
+      const text = await patchRes.text();
+      return NextResponse.json({ error: text }, { status: 500 });
     }
+
+    const rows = (await patchRes.json()) as Array<{
+      github_org_name: string;
+      tracked_repos: unknown;
+      webhook_secret: string;
+    }>;
+    const data = rows[0];
 
     return NextResponse.json({
       github_org_name: data.github_org_name,

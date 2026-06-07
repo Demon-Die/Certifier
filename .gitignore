@@ -38,3 +38,5 @@ scripts/
 *.tsbuildinfo
 next-env.d.ts
 .planning/
+# dev logs
+next-dev.log

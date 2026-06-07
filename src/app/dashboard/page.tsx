@@ -1,7 +1,6 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { createBrowserClient } from '@/lib/supabase/client';
 import { useSession } from 'next-auth/react';
 import { FamilyCard } from '@/components/dashboard/family-card';
 import { ClaimedBadges } from '@/components/dashboard/claimed-badges';
@@ -20,41 +19,28 @@ interface ClaimableBadge {
   tier: string;
 }
 
-function ClaimableBadges({ userId }: { userId: string }) {
+function ClaimableBadges() {
   const [badges, setBadges] = useState<ClaimableBadge[]>([]);
   const [loading, setLoading] = useState(true);
   const [claiming, setClaiming] = useState<string | null>(null);
 
   const refetchBadges = useCallback(async () => {
-    const supabase = createBrowserClient();
-    const { data } = await supabase
-      .from('badge_claims')
-      .select('id, family, tier')
-      .eq('user_id', userId)
-      .eq('status', 'available');
-    setBadges(data || []);
+    try {
+      const res = await fetch('/api/badges/available');
+      const json = await res.json();
+      setBadges(json.data || []);
+    } catch {
+      setBadges([]);
+    }
     setLoading(false);
-  }, [userId]);
+  }, []);
 
   useEffect(() => {
-    const supabase = createBrowserClient();
-
     refetchBadges();
-
-    const channel = supabase
-      .channel(`badge-claims:${userId}`)
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'badge_claims', filter: `user_id=eq.${userId}` },
-        () => {
-          refetchBadges();
-        }
-      )
-      .subscribe();
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [userId, refetchBadges]);
+    // Poll every 30s as fallback (Supabase realtime requires Supabase Auth session)
+    const interval = setInterval(refetchBadges, 30000);
+    return () => clearInterval(interval);
+  }, [refetchBadges]);
 
   const handleClaim = async (badgeId: string, family: string, tier: string) => {
     setClaiming(badgeId);
@@ -175,36 +161,34 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (!session?.user?.id) return;
-    const fetchData = async () => {
-      const supabase = createBrowserClient();
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('points_frontend, points_backend, points_docs, points_ideas, points_community')
-        .eq('id', session.user.id)
-        .single();
+    let mounted = true;
 
-      type ProfilePoints = Record<string, number>;
-      const points = (profile ?? {}) as unknown as ProfilePoints;
-      const families = ALL_FAMILIES.map((family) => {
-        const pts = points[`points_${family}`] || 0;
-        return getFamilyProgress(family, pts);
-      });
-      setData({ families, totalPoints: families.reduce((s, f) => s + f.points, 0) });
-      setLoading(false);
+    const fetchData = async () => {
+      try {
+        const res = await fetch('/api/user/profile');
+        const json = await res.json();
+        if (!mounted) return;
+        const profile = json.profile || {};
+
+        type ProfilePoints = Record<string, number>;
+        const points = profile as unknown as ProfilePoints;
+        const families = ALL_FAMILIES.map((family) => {
+          const pts = points[`points_${family}`] || 0;
+          return getFamilyProgress(family, pts);
+        });
+        setData({ families, totalPoints: families.reduce((s, f) => s + f.points, 0) });
+        setLoading(false);
+      } catch {
+        if (mounted) setLoading(false);
+      }
     };
     fetchData();
 
-    const supabase = createBrowserClient();
-    const channel = supabase
-      .channel(`profile:${session.user.id}`)
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'profiles', filter: `id=eq.${session.user.id}` },
-        fetchData
-      )
-      .subscribe();
+    // Poll every 30s as fallback (Supabase realtime requires Supabase Auth session)
+    const interval = setInterval(fetchData, 30000);
     return () => {
-      supabase.removeChannel(channel);
+      mounted = false;
+      clearInterval(interval);
     };
   }, [session?.user?.id]);
 
@@ -331,9 +315,9 @@ export default function DashboardPage() {
             ))}
           </div>
 
-          <ClaimableBadges userId={session.user.id} />
+          <ClaimableBadges />
           <div className="mt-6">
-            <ClaimedBadges userId={session.user.id} />
+            <ClaimedBadges />
           </div>
         </>
       )}

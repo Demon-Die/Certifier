@@ -1,9 +1,36 @@
 'use server';
 
-import { createServerClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
-import { auth } from '@/lib/auth';
 import { requireAdmin } from '@/lib/auth-guards';
+
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+
+interface SettingsRow {
+  github_org_name: string;
+  tracked_repos: unknown;
+  webhook_secret: string;
+}
+
+async function fetchSettingsRaw(): Promise<SettingsRow | null> {
+  const res = await fetch(
+    `${SUPABASE_URL}/rest/v1/maintainer_settings?id=eq.1&select=github_org_name,tracked_repos,webhook_secret`,
+    {
+      headers: {
+        apikey: SERVICE_KEY,
+        Authorization: `Bearer ${SERVICE_KEY}`,
+      },
+      cache: 'no-store',
+    }
+  );
+  if (res.status === 404 || res.status === 406) return null;
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`Failed to fetch settings: ${body}`);
+  }
+  const rows = (await res.json()) as SettingsRow[];
+  return rows[0] ?? null;
+}
 
 export type MaintainerSettings = {
   github_org_name: string;
@@ -57,26 +84,13 @@ function validateSettings(data: SettingsInput): { valid: boolean; errors: string
  * Returns null if not found
  */
 export async function getSettings(): Promise<MaintainerSettings | null> {
-  const supabase = createServerClient();
-
-  const { data, error } = await supabase
-    .from('maintainer_settings')
-    .select('github_org_name, tracked_repos, webhook_secret')
-    .eq('id', 1)
-    .single();
-
-  if (error) {
-    if (error.code === 'PGRST116') {
-      // No rows found
-      return null;
-    }
-    throw new Error(`Failed to fetch settings: ${error.message}`);
-  }
+  const row = await fetchSettingsRaw();
+  if (!row) return null;
 
   return {
-    github_org_name: data.github_org_name,
-    tracked_repos: data.tracked_repos as string[],
-    webhook_secret: data.webhook_secret,
+    github_org_name: row.github_org_name,
+    tracked_repos: row.tracked_repos as string[],
+    webhook_secret: row.webhook_secret,
   };
 }
 
@@ -94,29 +108,30 @@ export async function updateSettings(input: SettingsInput): Promise<MaintainerSe
   // Check admin role
   await requireAdmin();
 
-  const session = await auth();
-  const userId = session?.user?.id;
+  const body = {
+    github_org_name: input.github_org_name.trim(),
+    tracked_repos: input.tracked_repos.map((r) => r.trim()),
+    webhook_secret: input.webhook_secret,
+  };
 
-  const supabase = createServerClient();
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/maintainer_settings?id=eq.1`, {
+    method: 'PATCH',
+    headers: {
+      apikey: SERVICE_KEY,
+      Authorization: `Bearer ${SERVICE_KEY}`,
+      'Content-Type': 'application/json',
+      Prefer: 'return=representation',
+    },
+    body: JSON.stringify(body),
+  });
 
-  const { data, error } = await supabase
-    .from('maintainer_settings')
-    .upsert(
-      {
-        id: 1,
-        github_org_name: input.github_org_name.trim(),
-        tracked_repos: input.tracked_repos.map((r) => r.trim()),
-        webhook_secret: input.webhook_secret,
-        updated_by: userId,
-      },
-      { onConflict: 'id' }
-    )
-    .select('github_org_name, tracked_repos, webhook_secret')
-    .single();
-
-  if (error) {
-    throw new Error(`Failed to update settings: ${error.message}`);
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`Failed to update settings: ${text}`);
   }
+
+  const rows = (await res.json()) as SettingsRow[];
+  const data = rows[0];
 
   revalidatePath('/admin');
 

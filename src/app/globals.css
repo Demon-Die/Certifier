@@ -51,11 +51,7 @@
 
   @supports (color: color-mix(in oklch, red, blue)) {
     :root {
-      --color-secondary-hover: color-mix(
-        in oklch,
-        var(--secondary),
-        var(--foreground) 5%
-      );
+      --color-secondary-hover: color-mix(in oklch, var(--secondary), var(--foreground) 5%);
     }
   }
 

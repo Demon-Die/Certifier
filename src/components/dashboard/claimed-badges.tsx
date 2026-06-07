@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { createBrowserClient } from '@/lib/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getFamilyConfig } from '@/lib/dashboard';
 import { getBadgeDisplayName } from '@/lib/badges';
@@ -19,35 +18,27 @@ interface ClaimedBadge {
   created_at: string;
 }
 
-export function ClaimedBadges({ userId }: { userId: string }) {
+export function ClaimedBadges() {
   const [badges, setBadges] = useState<ClaimedBadge[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const supabase = createBrowserClient();
     const fetchBadges = async () => {
-      const { data } = await supabase
-        .from('badge_claims')
-        .select('*')
-        .eq('user_id', userId)
-        .order('created_at', { ascending: false });
-      setBadges(data || []);
+      try {
+        const res = await fetch('/api/badges/claimed');
+        const json = await res.json();
+        setBadges(json.data || []);
+      } catch {
+        setBadges([]);
+      }
       setLoading(false);
     };
     fetchBadges();
 
-    const channel = supabase
-      .channel(`claimed-badges:${userId}`)
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'badge_claims', filter: `user_id=eq.${userId}` },
-        fetchBadges
-      )
-      .subscribe();
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [userId]);
+    // Poll every 30s as fallback
+    const interval = setInterval(fetchBadges, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
   if (loading) {
     return (
@@ -106,7 +97,7 @@ export function ClaimedBadges({ userId }: { userId: string }) {
                   </p>
                   {badge.certifier_credential_id && (
                     <a
-                      href={`https://certifier.io/credentials/${badge.certifier_credential_id}`}
+                      href={`https://app.certifier.io/credentials/${badge.certifier_credential_id}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-xs text-primary flex items-center gap-1 mt-1 hover:underline"

@@ -1,5 +1,5 @@
 import GitHubProvider from 'next-auth/providers/github';
-import { createServerClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { AuthOptions } from 'next-auth';
 
 interface GithubProfile {
@@ -13,8 +13,8 @@ interface GithubProfile {
 export const authOptions: AuthOptions = {
   providers: [
     GitHubProvider({
-      clientId: process.env.GITHUB_ID!,
-      clientSecret: process.env.GITHUB_SECRET!,
+      clientId: process.env.AUTH_GITHUB_ID!,
+      clientSecret: process.env.AUTH_GITHUB_SECRET!,
       authorization: {
         params: {
           scope: 'read:user user:email repo',
@@ -35,33 +35,43 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    async signIn({ user, account, profile }) {
+    async signIn({ account, profile }) {
       const githubProfile = profile as GithubProfile | undefined;
       if (!account?.access_token || !githubProfile?.login) {
         return true;
       }
 
-      const supabase = createServerClient();
+      const supabase = createAdminClient();
 
-      // Upsert profile in Supabase
-      const { error } = await supabase.from('profiles').upsert(
-        {
-          id: user.id,
-          github_username: githubProfile.login,
-          role: 'contributor',
-          updated_at: new Date().toISOString(),
-        },
-        { onConflict: 'id' }
-      );
+      // Look up existing profile by github_username
+      const { data: existing } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('github_username', githubProfile.login)
+        .single();
 
-      if (error) {
-        console.error('Profile upsert error:', error);
+      if (existing) {
+        // Update existing profile using its Supabase UUID
+        const { error } = await supabase
+          .from('profiles')
+          .update({
+            github_username: githubProfile.login,
+            updated_at: new Date().toISOString(),
+          })
+          .eq('id', existing.id);
+
+        if (error) {
+          console.error('Profile update error:', error);
+        }
+      } else {
+        // Profile doesn't exist yet — log warning (user likely hasn't
+        // completed initial setup, but we allow sign-in)
+        console.warn('No profile found for', githubProfile.login);
       }
 
-      // Allow sign in even if profile creation fails (log only)
       return true;
     },
-    async jwt({ token, account, profile, trigger }) {
+    async jwt({ token, account, profile }) {
       // Initial sign in - store GitHub access token and profile info
       const githubProfile = profile as GithubProfile | undefined;
       if (account && githubProfile && account.access_token) {
@@ -70,19 +80,32 @@ export const authOptions: AuthOptions = {
         token.githubUsername = githubProfile.login;
       }
 
-      // Fetch role from Supabase on token refresh or initial sign in
-      if (trigger === 'signIn' || trigger === 'update') {
-        if (token.sub) {
-          const supabase = createServerClient();
-          const { data: profileData } = await supabase
+      // Fetch role + Supabase UUID from profiles (admin client bypasses RLS)
+      // token.sub is GitHub ID; we need to map to Supabase UUID
+      if (token.githubUsername) {
+        try {
+          const admin = createAdminClient();
+          const { data: profileData, error } = await admin
             .from('profiles')
-            .select('role')
-            .eq('id', token.sub)
+            .select('id, role')
+            .eq('github_username', token.githubUsername)
             .single();
 
-          if (profileData) {
-            token.role = profileData.role;
+          if (error) {
+            console.error('JWT profile lookup error:', error.message);
           }
+
+          if (profileData) {
+            // Use Supabase UUID as the session user ID
+            token.sub = profileData.id;
+            token.role = profileData.role ?? 'contributor';
+          } else {
+            console.warn('JWT: no profile found for', token.githubUsername);
+            token.role = 'contributor';
+          }
+        } catch (err) {
+          console.error('JWT profile lookup exception:', err);
+          token.role = 'contributor';
         }
       }
 

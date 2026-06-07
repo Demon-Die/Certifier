@@ -111,35 +111,46 @@ export async function claimBadge(
   groupId: string,
   recipient: CertifierRecipient,
   customAttributes?: Record<string, string>
-): Promise<{ credentialId: string | null; rateLimited: boolean; error?: string }> {
+): Promise<{
+  credentialId: string | null;
+  publicId: string | null;
+  rateLimited: boolean;
+  error?: string;
+}> {
   // Step 1: Create draft credential
-  const createResult = await createCredential({
+  // Skip custom attributes if none provided (prevents certifier "not defined" errors)
+  const credentialPayload: CreateCredentialPayload = {
     groupId,
     recipient,
     issueDate: new Date().toISOString().split('T')[0],
-    customAttributes,
-  });
+  };
+  if (customAttributes && Object.keys(customAttributes).length > 0) {
+    credentialPayload.customAttributes = customAttributes;
+  }
+
+  const createResult = await createCredential(credentialPayload);
 
   if (createResult.rateLimited)
-    return { credentialId: null, rateLimited: true, error: createResult.error };
+    return { credentialId: null, publicId: null, rateLimited: true, error: createResult.error };
   if (!createResult.data || createResult.error)
-    return { credentialId: null, rateLimited: false, error: createResult.error };
+    return { credentialId: null, publicId: null, rateLimited: false, error: createResult.error };
 
   const credentialId = createResult.data.id;
+  const publicId = createResult.data.publicId;
 
   // Step 2: Issue the credential
   const issueResult = await issueCredential(credentialId);
-  if (issueResult.rateLimited) return { credentialId: null, rateLimited: true };
+  if (issueResult.rateLimited) return { credentialId: null, publicId: null, rateLimited: true };
   if (issueResult.error)
-    return { credentialId: null, rateLimited: false, error: issueResult.error };
+    return { credentialId: null, publicId: null, rateLimited: false, error: issueResult.error };
 
   // Step 3: Send to recipient
   const sendResult = await sendCredential(credentialId);
-  if (sendResult.rateLimited) return { credentialId, rateLimited: true };
+  if (sendResult.rateLimited) return { credentialId, publicId, rateLimited: true };
   // Send failure is non-critical - credential is already issued
   if (sendResult.error) {
     console.warn(`[certifier] Send failed for ${credentialId}: ${sendResult.error}`);
   }
 
-  return { credentialId, rateLimited: false };
+  return { credentialId, publicId, rateLimited: false };
 }
