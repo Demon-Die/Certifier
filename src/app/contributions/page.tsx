@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
-import { createBrowserClient } from '@/lib/supabase/client';
 import { useSession } from 'next-auth/react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -57,33 +56,20 @@ export default function ContributionsPage() {
     if (!session?.user?.id) return;
     setLoading(true);
 
-    const supabase = createBrowserClient();
-    let query = supabase
-      .from('contributions')
-      .select('*', { count: 'exact' })
-      .eq('user_id', session.user.id)
-      .order('merged_at', { ascending: false });
+    const params = new URLSearchParams({ page: String(page) });
+    if (familyFilter !== 'all') params.set('family', familyFilter);
+    if (tierFilter !== 'all') params.set('tier', tierFilter);
+    if (searchQuery.trim()) params.set('search', searchQuery.trim());
 
-    if (familyFilter !== 'all') {
-      query = query.eq(
-        'family',
-        familyFilter as 'frontend' | 'backend' | 'docs' | 'ideas' | 'community'
-      );
+    try {
+      const res = await fetch(`/api/contributions?${params}`);
+      const json = await res.json();
+      setContributions(json.data || []);
+      setTotalCount(json.totalCount ?? 0);
+    } catch {
+      setContributions([]);
+      setTotalCount(0);
     }
-    if (tierFilter !== 'all') {
-      query = query.eq('tier', tierFilter as 'imp' | 'fiend' | 'overlord' | 'demon king');
-    }
-    if (searchQuery.trim()) {
-      query = query.ilike('pr_title', `%${searchQuery.trim()}%`);
-    }
-
-    const from = page * PAGE_SIZE;
-    const to = from + PAGE_SIZE - 1;
-    query = query.range(from, to);
-
-    const { data, count } = await query;
-    setContributions((data || []) as Contribution[]);
-    if (count !== null) setTotalCount(count);
     setLoading(false);
   }, [session?.user?.id, familyFilter, tierFilter, searchQuery, page]);
 

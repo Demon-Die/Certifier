@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
-import { createBrowserClient } from '@/lib/supabase/client';
 import { useSession } from 'next-auth/react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -72,15 +71,17 @@ export default function SpecialBadgesPage() {
     session?.user?.role === 'maintainer' || session?.user?.role === 'admin';
 
   const fetchData = useCallback(async () => {
-    const supabase = createBrowserClient();
-    const [badgesRes, nominationsRes, profilesRes] = await Promise.all([
-      supabase.from('special_badges').select('*').order('name'),
-      supabase.from('special_nominations').select('*').order('created_at', { ascending: false }),
-      supabase.from('profiles').select('id, github_username').order('github_username'),
-    ]);
-    setBadges((badgesRes.data || []) as SpecialBadge[]);
-    setNominations((nominationsRes.data || []) as Nomination[]);
-    setProfiles((profilesRes.data || []) as Profile[]);
+    try {
+      const res = await fetch('/api/special-badges/data');
+      const json = await res.json();
+      setBadges(json.badges || []);
+      setNominations(json.nominations || []);
+      setProfiles(json.profiles || []);
+    } catch {
+      setBadges([]);
+      setNominations([]);
+      setProfiles([]);
+    }
     setLoading(false);
   }, []);
 
