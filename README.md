@@ -258,6 +258,8 @@ merged PRs — the label determines the family and tier.
 | [CONTRIBUTING.md](CONTRIBUTING.md) | How to contribute, PR workflow, label convention |
 | [SECURITY.md](SECURITY.md) | Security policy and vulnerability reporting |
 | [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) | Community standards and enforcement |
+| [Guides: Claiming Badges](docs/guides/claiming-badges.md) | Step-by-step for contributors to claim their earned badges |
+| [Guides: Maintainer Labels](docs/guides/maintainer-labels.md) | Label format, setup, and point award system for maintainers |
 | [LICENSE](LICENSE) | MIT license |
 
 ## License
