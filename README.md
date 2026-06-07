@@ -5,7 +5,6 @@
 > recognize their contributors meaningfully.
 
 [![Deployed on Vercel](https://img.shields.io/badge/deployed-vercel-000?logo=vercel)](https://certifier-demondie.vercel.app/)
-[![CI](https://github.com/DemonDie/certifier/actions/workflows/ci.yml/badge.svg)](https://github.com/DemonDie/certifier/actions/workflows/ci.yml)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 ---
