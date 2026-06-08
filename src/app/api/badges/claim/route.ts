@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { createAdminClient } from '@/lib/supabase/admin';
-import { claimBadge } from '@/lib/certifier';
+import { claimBadgeWithFallback } from '@/lib/certifier';
 import { getTemplateGroupId, getBadgeDisplayName, CERTIFIER_IS_CONFIGURED } from '@/lib/badges';
 import { type Family, type Tier } from '@/lib/points';
 import { claimBadgeSchema } from '@/lib/validations';
@@ -69,8 +69,7 @@ export async function POST(request: NextRequest) {
     if (!groupId) {
       return NextResponse.json(
         {
-          error:
-            'No certifier template configured for this badge. Set CERTIFIER_TEMPLATES env var.',
+          error: 'No certifier template configured for this badge. Set CERTIFIER_ACCOUNTS env var.',
         },
         { status: 500 }
       );
@@ -90,12 +89,20 @@ export async function POST(request: NextRequest) {
 
     const badgeName = getBadgeDisplayName(family as Family, tier as Tier);
 
-    // Execute claim flow (no custom attributes to avoid certifier workspace config issues)
-    const result = await claimBadge(groupId, recipient);
+    // Execute multi-account claim flow with fallback across accounts
+    const result = await claimBadgeWithFallback(
+      family as string,
+      tier as string,
+      groupId,
+      recipient
+    );
 
     if (result.rateLimited) {
       return NextResponse.json(
-        { error: 'Certifier rate limit exceeded. Try again later.', rateLimited: true },
+        {
+          error: 'Certifier rate limit exceeded on all accounts. Try again later.',
+          rateLimited: true,
+        },
         { status: 429 }
       );
     }
@@ -104,7 +111,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: result.error }, { status: 500 });
     }
 
-    // Update badge_claims record with credential ID (use publicId for public URL)
+    // Update badge_claims record with credential ID and account index
     const credentialId = result.publicId || result.credentialId;
     const { error: updateError } = await supabase
       .from('badge_claims')
@@ -112,6 +119,7 @@ export async function POST(request: NextRequest) {
         status: 'claimed',
         claimed_at: new Date().toISOString(),
         certifier_credential_id: credentialId,
+        certifier_account_index: result.accountIndex,
       })
       .eq('id', badgeClaim.id);
 
@@ -123,6 +131,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       credentialId,
+      accountIndex: result.accountIndex,
       message: `Badge "${badgeName}" has been issued! Check your email.`,
     });
   } catch (err) {

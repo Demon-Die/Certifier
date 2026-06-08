@@ -114,6 +114,7 @@ export type Database = {
           tier: 'imp' | 'fiend' | 'overlord' | 'demon king';
           status: 'available' | 'claimed';
           certifier_credential_id: string | null;
+          certifier_account_index: number | null;
           claimed_at: string | null;
           created_at: string;
         };
@@ -124,6 +125,7 @@ export type Database = {
           tier: 'imp' | 'fiend' | 'overlord' | 'demon king';
           status?: 'available' | 'claimed';
           certifier_credential_id?: string | null;
+          certifier_account_index?: number | null;
           claimed_at?: string | null;
           created_at?: string;
         };
@@ -134,6 +136,7 @@ export type Database = {
           tier?: 'imp' | 'fiend' | 'overlord' | 'demon king';
           status?: 'available' | 'claimed';
           certifier_credential_id?: string | null;
+          certifier_account_index?: number | null;
           claimed_at?: string | null;
           created_at?: string;
         };
