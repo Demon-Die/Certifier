@@ -52,10 +52,7 @@ export function Header() {
             );
           })}
           <span className="ml-2 flex items-center gap-1.5 text-xs text-muted-foreground font-mono">
-            <span
-              className="w-1.5 h-1.5 rounded-full bg-primary"
-              aria-hidden="true"
-            />
+            <span className="w-1.5 h-1.5 rounded-full bg-primary" aria-hidden="true" />
             <span className="hidden lg:inline">LIVE</span>
           </span>
         </nav>
@@ -117,10 +114,7 @@ export function Header() {
 
               <div className="mt-6 pt-6 border-t border-surface-container px-4">
                 <span className="flex items-center gap-2 text-xs text-muted-foreground font-mono">
-                  <span
-                    className="w-1.5 h-1.5 rounded-full bg-primary"
-                    aria-hidden="true"
-                  />
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary" aria-hidden="true" />
                   SYSTEM ONLINE
                 </span>
               </div>
