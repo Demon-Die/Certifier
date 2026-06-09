@@ -11,7 +11,7 @@ awards points when pull requests are merged.
 PR merged with label "frontend:imp"
         │
         ▼
-GitHub sends webhook to /api/webhooks/github
+GitHub sends webhook to /api/github/webhook
         │
         ▼
 App parses the label, identifies family + tier

@@ -11,6 +11,7 @@ const navLinks = [
   { href: '/badges', label: 'Badges' },
   { href: '/leaderboard', label: 'Leaderboard' },
   { href: '/contributions', label: 'Contributions' },
+  { href: '/faq', label: 'FAQ' },
   { href: '/admin', label: 'Admin' },
 ];
 

@@ -5,6 +5,17 @@ earned credentials.
 
 ---
 
+## Prerequisites
+
+Before you can claim badges, you need a contributor profile. If you
+haven't already:
+
+1. Go to [certifier-demondie.vercel.app](https://certifier-demondie.vercel.app)
+2. Click **Sign in with GitHub**
+3. Your profile is created automatically
+
+See the [Registration Guide](./registration.md) for detailed steps.
+
 ## Overview
 
 When you contribute to a tracked repository, your PR merges earn points
