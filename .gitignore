@@ -42,3 +42,6 @@ next-env.d.ts
 next-dev.log
 # design reference
 target ui/
+
+# supabase migrations & config (not needed at runtime on Vercel)
+supabase/
