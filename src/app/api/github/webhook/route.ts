@@ -82,7 +82,22 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    const githubUserId = String(pr.user.id);
+    // Look up the contributor by GitHub login — find their profiles.id
+    const authorUsername = pr.user.login;
+    const profileLookup = await fetch(
+      `${SUPABASE_URL}/rest/v1/profiles?github_username=eq.${encodeURIComponent(authorUsername)}&select=id`,
+      { headers: { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}` } }
+    );
+    const profiles = profileLookup.ok ? (await profileLookup.json()) as Array<{ id: string }> : [];
+    if (profiles.length === 0) {
+      return NextResponse.json({
+        ok: true,
+        ignored: true,
+        reason: `user not registered: ${authorUsername}`,
+      });
+    }
+    const profileId = profiles[0].id;
+
     const results: Array<{
       label: string;
       status: string;
@@ -100,7 +115,7 @@ export async function POST(request: NextRequest) {
       const tier = label.tier as Tier;
       const points = calculatePoints(tier);
 
-      // 1. Insert into contributions table
+      // 1. Insert into contributions table (uses profiles.id which is GitHub ID text)
       const contribRes = await fetch(`${SUPABASE_URL}/rest/v1/contributions`, {
         method: 'POST',
         headers: {
@@ -109,7 +124,7 @@ export async function POST(request: NextRequest) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          user_id: githubUserId,
+          user_id: profileId,
           repo: repoFullName,
           pr_number: pr.number,
           pr_title: pr.title,
@@ -125,16 +140,7 @@ export async function POST(request: NextRequest) {
       if (!contribRes.ok) {
         const errText = await contribRes.text();
         console.error(`[webhook] contribution insert failed: ${errText}`);
-        // If FK violation (profile doesn't exist), tell them to sign in
-        if (contribRes.status === 400 && errText.includes('foreign key')) {
-          results.push({
-            label: label.label,
-            status: 'skipped',
-            error: `contributor needs to sign in first (GitHub ID: ${githubUserId})`,
-          });
-        } else {
-          results.push({ label: label.label, status: 'error', error: errText });
-        }
+        results.push({ label: label.label, status: 'error', error: errText });
         continue;
       }
 
@@ -147,7 +153,7 @@ export async function POST(request: NextRequest) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          p_user_id: githubUserId,
+          p_user_id: profileId,
           p_column: `points_${family}`,
           p_points: points,
         }),
