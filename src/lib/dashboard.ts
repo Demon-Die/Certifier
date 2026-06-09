@@ -34,7 +34,12 @@ const FAMILY_CONFIG: Record<Family, { name: string; emoji: string; color: string
       color: 'green',
       desc: 'Docs, tutorials, translations',
     },
-    community: { name: 'Community', emoji: '🤝', color: 'purple', desc: 'Support, reviews, CI/CD, ideas, UX research' },
+    community: {
+      name: 'Community',
+      emoji: '🤝',
+      color: 'purple',
+      desc: 'Support, reviews, CI/CD, ideas, UX research',
+    },
   };
 
 export const ALL_FAMILIES: Family[] = ['frontend', 'backend', 'docs', 'community'];

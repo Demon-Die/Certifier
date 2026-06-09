@@ -39,7 +39,8 @@ const faqSections = [
         <br />
         <span className="text-primary">docs</span> — Documentation, tutorials, translations, README
         <br />
-        <span className="text-primary">community</span> — Issue triage, reviews, feature proposals, CI/CD, support
+        <span className="text-primary">community</span> — Issue triage, reviews, feature proposals,
+        CI/CD, support
       </>
     ),
   },
