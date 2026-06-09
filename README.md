@@ -21,7 +21,7 @@ Sign in with GitHub to see your dashboard, track points, and claim badges.
 
 New to the project? Get up and running in three steps:
 
-1. **Visit the app** at [certifier-demondie.vercel.app](https://certifier-demondie.vercel.app/)
+1. **Visit the app** at [Live App](https://certifier-demondie.vercel.app/)
 2. **Click "Sign in with GitHub"** — no forms, no passwords, just one click
 3. **You're in!** Your dashboard shows your points, progress, and available badges
 
@@ -166,6 +166,8 @@ merged PRs — the label determines the family and tier.
 | [Idea Template](docs/guides/idea-template.md) | Template for submitting a structured idea proposal |
 | [LICENSE](LICENSE) | MIT license |
 
-## License
+<div align="center">
+    Made with 💓 by <a href="https://github.com/Demon-Die">Demon Die</a>
+</div>
 
-MIT © DemonDie
+
