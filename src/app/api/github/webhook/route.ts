@@ -88,7 +88,9 @@ export async function POST(request: NextRequest) {
       `${SUPABASE_URL}/rest/v1/profiles?github_username=eq.${encodeURIComponent(authorUsername)}&select=id`,
       { headers: { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}` } }
     );
-    const profiles = profileLookup.ok ? (await profileLookup.json()) as Array<{ id: string }> : [];
+    const profiles = profileLookup.ok
+      ? ((await profileLookup.json()) as Array<{ id: string }>)
+      : [];
     if (profiles.length === 0) {
       return NextResponse.json({
         ok: true,

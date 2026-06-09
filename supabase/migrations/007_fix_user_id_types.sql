@@ -13,6 +13,7 @@ DROP POLICY IF EXISTS "contributions_select_own_or_maintainer" ON public.contrib
 DROP POLICY IF EXISTS "badge_claims_select_own_or_maintainer" ON public.badge_claims;
 DROP POLICY IF EXISTS "badge_claims_insert_own_available" ON public.badge_claims;
 DROP POLICY IF EXISTS "badge_claims_update_own_claim_or_admin" ON public.badge_claims;
+DROP POLICY IF EXISTS "special_nominations_select_own_or_maintainer" ON public.special_nominations;
 
 -- ============================================================================
 -- STEP 2: Drop indexes that reference user_id columns
@@ -129,6 +130,14 @@ CREATE POLICY "badge_claims_update_own_claim_or_admin"
   WITH CHECK (
     (auth.uid()::text = user_id AND status = 'claimed' AND certifier_credential_id IS NOT NULL)
     OR public.is_admin()
+  );
+
+CREATE POLICY "special_nominations_select_own_or_maintainer"
+  ON public.special_nominations FOR SELECT
+  USING (
+    auth.uid()::text = nominee_id
+    OR auth.uid()::text = nominated_by
+    OR public.is_maintainer_or_admin()
   );
 
 -- ============================================================================
