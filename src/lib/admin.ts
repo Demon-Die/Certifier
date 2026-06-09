@@ -115,14 +115,14 @@ export async function updateSettings(input: SettingsInput): Promise<MaintainerSe
   };
 
   const res = await fetch(`${SUPABASE_URL}/rest/v1/maintainer_settings?id=eq.1`, {
-    method: 'PATCH',
+    method: 'POST',
     headers: {
       apikey: SERVICE_KEY,
       Authorization: `Bearer ${SERVICE_KEY}`,
       'Content-Type': 'application/json',
-      Prefer: 'return=representation',
+      Prefer: 'resolution=merge-duplicates,return=representation',
     },
-    body: JSON.stringify(body),
+    body: JSON.stringify({ id: 1, ...body }),
   });
 
   if (!res.ok) {

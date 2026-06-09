@@ -103,29 +103,30 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    const patchBody = {
+    const upsertBody = {
+      id: 1,
       github_org_name: github_org_name.trim(),
       tracked_repos: tracked_repos.map((r: string) => r.trim()),
       webhook_secret,
     };
 
-    const patchRes = await fetch(`${SUPABASE_URL}/rest/v1/maintainer_settings?id=eq.1`, {
-      method: 'PATCH',
+    const upsertRes = await fetch(`${SUPABASE_URL}/rest/v1/maintainer_settings`, {
+      method: 'POST',
       headers: {
         apikey: SERVICE_KEY,
         Authorization: `Bearer ${SERVICE_KEY}`,
         'Content-Type': 'application/json',
-        Prefer: 'return=representation',
+        Prefer: 'resolution=merge-duplicates,return=representation',
       },
-      body: JSON.stringify(patchBody),
+      body: JSON.stringify(upsertBody),
     });
 
-    if (!patchRes.ok) {
-      const text = await patchRes.text();
+    if (!upsertRes.ok) {
+      const text = await upsertRes.text();
       return NextResponse.json({ error: text }, { status: 500 });
     }
 
-    const rows = (await patchRes.json()) as Array<{
+    const rows = (await upsertRes.json()) as Array<{
       github_org_name: string;
       tracked_repos: unknown;
       webhook_secret: string;
