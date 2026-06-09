@@ -67,7 +67,7 @@ export default function Home() {
         <div className="border-t border-surface-container pt-6 text-center">
           <p className="font-mono text-micro text-muted-foreground">
             <span
-              className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse inline-block mr-2"
+              className="w-1.5 h-1.5 rounded-full bg-primary inline-block mr-2"
               aria-hidden="true"
             />
             DemonDie Certification System v1.0.0

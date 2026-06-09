@@ -105,6 +105,9 @@ export function RepoList({ repos, onChange, errors = [] }: RepoListProps) {
               )}
               aria-invalid={!!repoErrors[index]}
               aria-describedby={repoErrors[index] ? `repo-error-${index}` : undefined}
+              autoComplete="off"
+              spellCheck={false}
+              name="repo"
             />
             {repoErrors[index] && (
               <p id={`repo-error-${index}`} className="text-xs text-destructive whitespace-nowrap">

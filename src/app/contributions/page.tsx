@@ -92,7 +92,7 @@ export default function ContributionsPage() {
       <div className="mb-8 border-b border-surface-container pb-6">
         <div className="flex items-center gap-2 mb-1">
           <span
-            className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse inline-block"
+            className="w-1.5 h-1.5 rounded-full bg-primary inline-block"
             aria-hidden="true"
           />
           <span className="font-mono text-[11px] text-muted-foreground tracking-widest uppercase">
@@ -129,6 +129,9 @@ export default function ContributionsPage() {
                   setPage(0);
                 }}
                 className="w-60"
+                aria-label="Search contributions"
+                autoComplete="off"
+                name="search"
               />
             </div>
             <Select
@@ -138,7 +141,7 @@ export default function ContributionsPage() {
                 setPage(0);
               }}
             >
-              <SelectTrigger className="w-36">
+              <SelectTrigger className="w-36" aria-label="Filter by family">
                 <SelectValue placeholder="Family" />
               </SelectTrigger>
               <SelectContent>
@@ -157,7 +160,7 @@ export default function ContributionsPage() {
                 setPage(0);
               }}
             >
-              <SelectTrigger className="w-32">
+              <SelectTrigger className="w-32" aria-label="Filter by tier">
                 <SelectValue placeholder="Tier" />
               </SelectTrigger>
               <SelectContent>
@@ -266,6 +269,7 @@ export default function ContributionsPage() {
                       size="sm"
                       disabled={page <= 0}
                       onClick={() => setPage((p) => p - 1)}
+                      aria-label="Previous page"
                     >
                       <ChevronLeft className="h-4 w-4" aria-hidden="true" />
                     </Button>
@@ -274,6 +278,7 @@ export default function ContributionsPage() {
                       size="sm"
                       disabled={page >= totalPages - 1}
                       onClick={() => setPage((p) => p + 1)}
+                      aria-label="Next page"
                     >
                       <ChevronRight className="h-4 w-4" aria-hidden="true" />
                     </Button>

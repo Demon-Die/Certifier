@@ -72,7 +72,7 @@ export function UserMenu() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger aria-label="User menu">
         <Avatar className="size-8 cursor-pointer hover:ring-2 hover:ring-primary transition-colors">
           <AvatarImage src={image ?? undefined} alt={name} />
           <AvatarFallback>{initials}</AvatarFallback>

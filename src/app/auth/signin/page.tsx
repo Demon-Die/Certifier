@@ -52,7 +52,7 @@ export default function SignInPage() {
         <div className="mt-4 text-center">
           <span className="inline-flex items-center gap-1.5 font-mono text-[10px] text-muted-foreground">
             <span
-              className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse inline-block"
+              className="w-1.5 h-1.5 rounded-full bg-primary inline-block"
               aria-hidden="true"
             />
             GATEWAY_SECURED

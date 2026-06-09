@@ -118,7 +118,7 @@ export default function BadgesPage() {
       <div className="mb-8 border-b border-surface-container pb-6">
         <div className="flex items-center gap-2 mb-1">
           <span
-            className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse inline-block"
+            className="w-1.5 h-1.5 rounded-full bg-primary inline-block"
             aria-hidden="true"
           />
           <span className="font-mono text-[11px] text-muted-foreground tracking-widest uppercase">
@@ -137,13 +137,13 @@ export default function BadgesPage() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <Card>
           <CardContent className="pt-4 text-center">
-            <div className="text-2xl font-mono font-bold text-primary">{claimed.length}</div>
+            <div className="text-2xl font-mono font-bold text-primary tabular-nums">{claimed.length}</div>
             <div className="text-xs font-mono text-muted-foreground mt-1">Claimed</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="pt-4 text-center">
-            <div className="text-2xl font-mono font-bold text-amber-400">{available.length}</div>
+            <div className="text-2xl font-mono font-bold text-amber-400 tabular-nums">{available.length}</div>
             <div className="text-xs font-mono text-muted-foreground mt-1">Available</div>
           </CardContent>
         </Card>
@@ -186,7 +186,7 @@ export default function BadgesPage() {
                   return (
                     <div
                       key={tier}
-                      className={`rounded border px-3 py-2.5 transition-all ${
+                      className={`rounded border px-3 py-2.5 transition-colors ${
                         claimed
                           ? `${TIER_BG[tier]} ${TIER_COLORS[tier]} border`
                           : avail
@@ -220,7 +220,7 @@ export default function BadgesPage() {
                               onClick={() => handleClaim(family, tier)}
                               disabled={claimingId === `${family}:${tier}`}
                             >
-                              {claimingId === `${family}:${tier}` ? '...' : 'Claim'}
+                              {claimingId === `${family}:${tier}` ? '…' : 'Claim'}
                             </Button>
                           ) : (
                             <span className="text-[10px] font-mono text-muted-foreground/50">

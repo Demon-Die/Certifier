@@ -97,6 +97,8 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
               {...register('github_org_name')}
               aria-invalid={!!errors.github_org_name}
               aria-describedby={errors.github_org_name ? 'github_org_name-error' : undefined}
+              autoComplete="organization"
+              name="github_org"
             />
             {errors.github_org_name && (
               <p id="github_org_name-error" className="text-sm text-destructive" role="alert">
@@ -158,6 +160,9 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
                 readOnly={
                   !showSecret && !!initialSettings?.webhook_secret && !watch('webhook_secret')
                 }
+                autoComplete="off"
+                spellCheck={false}
+                name="webhook_secret"
               />
               <Button
                 type="button"

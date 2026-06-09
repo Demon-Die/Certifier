@@ -53,7 +53,7 @@ export function Header() {
           })}
           <span className="ml-2 flex items-center gap-1.5 text-xs text-muted-foreground font-mono">
             <span
-              className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"
+              className="w-1.5 h-1.5 rounded-full bg-primary"
               aria-hidden="true"
             />
             <span className="hidden lg:inline">LIVE</span>
@@ -86,15 +86,14 @@ export function Header() {
       {mobileOpen && (
         <>
           {/* Backdrop */}
-          <div
+          <button
             className="fixed inset-0 bg-black/60 z-40 md:hidden"
             onClick={() => setMobileOpen(false)}
-            onKeyDown={(e) => e.key === 'Escape' && setMobileOpen(false)}
-            tabIndex={-1}
+            aria-label="Close menu"
           />
 
           {/* Slide-out panel */}
-          <div className="fixed top-14 right-0 w-72 max-w-[80vw] h-[calc(100vh-3.5rem)] bg-background border-l border-surface-container z-50 md:hidden overflow-y-auto">
+          <div className="fixed top-14 right-0 w-72 max-w-[80vw] h-[calc(100vh-3.5rem)] bg-background border-l border-surface-container z-50 md:hidden overflow-y-auto overscroll-y-contain">
             <nav className="flex flex-col p-4 gap-1">
               {navLinks.map((link) => {
                 const isActive = pathname?.startsWith(link.href);
@@ -119,7 +118,7 @@ export function Header() {
               <div className="mt-6 pt-6 border-t border-surface-container px-4">
                 <span className="flex items-center gap-2 text-xs text-muted-foreground font-mono">
                   <span
-                    className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"
+                    className="w-1.5 h-1.5 rounded-full bg-primary"
                     aria-hidden="true"
                   />
                   SYSTEM ONLINE

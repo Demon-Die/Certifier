@@ -52,7 +52,7 @@ export default function LeaderboardPage() {
       <div className="mb-8 border-b border-surface-container pb-6">
         <div className="flex items-center gap-2 mb-1">
           <span
-            className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse inline-block"
+            className="w-1.5 h-1.5 rounded-full bg-primary inline-block"
             aria-hidden="true"
           />
           <span className="font-mono text-[11px] text-muted-foreground tracking-widest uppercase">
@@ -152,14 +152,14 @@ export default function LeaderboardPage() {
 
                   {/* Total Points */}
                   <div className="hidden md:block text-right">
-                    <span className="font-mono text-sm font-bold text-foreground">
+                    <span className="font-mono text-sm font-bold text-foreground tabular-nums">
                       {entry.total_points}
                     </span>
                     <span className="text-[10px] text-muted-foreground ml-1">pts</span>
                   </div>
 
                   {/* Badges */}
-                  <div className="hidden md:block text-right font-mono text-sm text-muted-foreground">
+                  <div className="hidden md:block text-right font-mono text-sm text-muted-foreground tabular-nums">
                     {entry.badges_count > 0 ? (
                       <span className="text-primary">{entry.badges_count}</span>
                     ) : (
@@ -184,11 +184,11 @@ export default function LeaderboardPage() {
 
                   {/* Mobile: points + badges inline */}
                   <div className="md:hidden text-right">
-                    <div className="font-mono text-sm font-bold text-foreground">
+                    <div className="font-mono text-sm font-bold text-foreground tabular-nums">
                       {entry.total_points}{' '}
                       <span className="text-[10px] text-muted-foreground font-normal">pts</span>
                     </div>
-                    <div className="text-[10px] font-mono text-muted-foreground">
+                    <div className="text-[10px] font-mono text-muted-foreground tabular-nums">
                       {entry.badges_count > 0
                         ? `${entry.badges_count} badge${entry.badges_count !== 1 ? 's' : ''}`
                         : '—'}

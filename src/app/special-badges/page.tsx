@@ -161,7 +161,7 @@ export default function SpecialBadgesPage() {
       <div className="mb-8 border-b border-surface-container pb-6">
         <div className="flex items-center gap-2 mb-1">
           <span
-            className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse inline-block"
+            className="w-1.5 h-1.5 rounded-full bg-primary inline-block"
             aria-hidden="true"
           />
           <span className="font-mono text-[11px] text-muted-foreground tracking-widest uppercase">

@@ -18,7 +18,7 @@ export default function Loading() {
             </p>
             <p className="flex items-center gap-2">
               <span
-                className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse inline-block"
+                className="w-1.5 h-1.5 rounded-full bg-primary inline-block"
                 aria-hidden="true"
               />
               <span className="text-on-surface-variant text-[11px] cursor-blink">

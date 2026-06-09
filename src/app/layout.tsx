@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { JetBrains_Mono } from 'next/font/google';
 import { GeistSans } from 'geist/font/sans';
 import './globals.css';
@@ -20,13 +20,17 @@ export const metadata: Metadata = {
     'Terminal-based badge system for open source contributors. Earn badges, track progress, claim credentials.',
 };
 
+export const viewport: Viewport = {
+  themeColor: '#000000',
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className="dark">
+    <html lang="en" suppressHydrationWarning className="dark" style={{ colorScheme: 'dark' }}>
       <body
         className={`${GeistSans.variable} ${jetbrainsMono.variable} font-sans antialiased bg-background text-foreground`}
       >
@@ -39,8 +43,11 @@ export default function RootLayout({
           >
             <TooltipProvider>
               <div className="flex min-h-screen flex-col">
+                <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-background focus:text-foreground focus:border focus:border-primary">
+                  Skip to main content
+                </a>
                 <Header />
-                <main className="flex-1">{children}</main>
+                <main id="main-content" className="flex-1">{children}</main>
               </div>
               <Toaster position="bottom-right" />
             </TooltipProvider>
