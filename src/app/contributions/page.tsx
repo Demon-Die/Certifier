@@ -39,7 +39,7 @@ interface Contribution {
 }
 
 const PAGE_SIZE = 15;
-const ALL_FAMILIES = ['frontend', 'backend', 'docs', 'ideas', 'community'];
+const ALL_FAMILIES = ['frontend', 'backend', 'docs', 'community'];
 const ALL_TIERS = ['imp', 'fiend', 'overlord', 'demon king'];
 
 export default function ContributionsPage() {

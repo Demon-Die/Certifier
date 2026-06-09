@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
     .order('merged_at', { ascending: false });
 
   if (family && family !== 'all') {
-    query = query.eq('family', family as 'frontend' | 'backend' | 'docs' | 'ideas' | 'community');
+    query = query.eq('family', family as 'frontend' | 'backend' | 'docs' | 'community');
   }
   if (tier && tier !== 'all') {
     query = query.eq('tier', tier as 'imp' | 'fiend' | 'overlord' | 'demon king');

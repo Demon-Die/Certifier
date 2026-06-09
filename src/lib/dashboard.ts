@@ -34,11 +34,10 @@ const FAMILY_CONFIG: Record<Family, { name: string; emoji: string; color: string
       color: 'green',
       desc: 'Docs, tutorials, translations',
     },
-    ideas: { name: 'Ideas', emoji: '💡', color: 'yellow', desc: 'Feature proposals, UX research' },
-    community: { name: 'Community', emoji: '🤝', color: 'purple', desc: 'Support, reviews, CI/CD' },
+    community: { name: 'Community', emoji: '🤝', color: 'purple', desc: 'Support, reviews, CI/CD, ideas, UX research' },
   };
 
-export const ALL_FAMILIES: Family[] = ['frontend', 'backend', 'docs', 'ideas', 'community'];
+export const ALL_FAMILIES: Family[] = ['frontend', 'backend', 'docs', 'community'];
 
 export function getFamilyProgress(family: Family, points: number): FamilyProgress {
   let currentTier: string | null = null;

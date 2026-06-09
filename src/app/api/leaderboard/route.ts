@@ -8,7 +8,6 @@ export interface LeaderboardEntry {
   points_frontend: number;
   points_backend: number;
   points_docs: number;
-  points_ideas: number;
   points_community: number;
   total_points: number;
   badges_count: number;
@@ -26,7 +25,7 @@ export async function GET() {
   const { data: profiles, error } = await supabase
     .from('profiles')
     .select(
-      'github_username, role, points_frontend, points_backend, points_docs, points_ideas, points_community'
+      'github_username, role, points_frontend, points_backend, points_docs, points_community'
     );
 
   if (error) {
@@ -54,7 +53,6 @@ export async function GET() {
       (p.points_frontend || 0) +
       (p.points_backend || 0) +
       (p.points_docs || 0) +
-      (p.points_ideas || 0) +
       (p.points_community || 0);
     return {
       github_username: p.github_username,
@@ -62,7 +60,6 @@ export async function GET() {
       points_frontend: p.points_frontend || 0,
       points_backend: p.points_backend || 0,
       points_docs: p.points_docs || 0,
-      points_ideas: p.points_ideas || 0,
       points_community: p.points_community || 0,
       total_points: total,
       badges_count: badgeCountMap[p.github_username] || 0,

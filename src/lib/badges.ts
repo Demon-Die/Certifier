@@ -26,7 +26,6 @@ export function getBadgeDisplayName(family: Family, tier: Tier): string {
     frontend: 'Frontend',
     backend: 'Backend',
     docs: 'Documentation',
-    ideas: 'Ideas',
     community: 'Community',
   };
   const tierNames: Record<Tier, string> = {

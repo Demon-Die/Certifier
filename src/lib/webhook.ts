@@ -54,7 +54,7 @@ export function parsePullRequestPayload(body: unknown): PullRequestPayload | nul
 export function extractFamilyTierLabels(
   labels: Array<{ name: string }>
 ): Array<{ family: string; tier: string; label: string }> {
-  const validFamilies = ['frontend', 'backend', 'docs', 'ideas', 'community'];
+  const validFamilies = ['frontend', 'backend', 'docs', 'community'];
   const validTiers = ['imp', 'fiend', 'overlord', 'demon king'];
   const results: Array<{ family: string; tier: string; label: string }> = [];
 

@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const claimBadgeSchema = z.object({
-  family: z.enum(['frontend', 'backend', 'docs', 'ideas', 'community']),
+  family: z.enum(['frontend', 'backend', 'docs', 'community']),
   tier: z.enum(['imp', 'fiend', 'overlord', 'demon king']),
 });
 

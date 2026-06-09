@@ -99,7 +99,7 @@ export async function POST(request: NextRequest) {
       pr_title: prPayload.pull_request.title,
       pr_url: prPayload.pull_request.html_url,
       merged_at: prPayload.pull_request.merged_at || new Date().toISOString(),
-      family: award.family as 'frontend' | 'backend' | 'docs' | 'ideas' | 'community',
+            family: award.family as 'frontend' | 'backend' | 'docs' | 'community',
       tier: award.tier as 'imp' | 'fiend' | 'overlord' | 'demon king',
       points_awarded: award.points,
       label_used: award.label,
@@ -128,7 +128,7 @@ export async function POST(request: NextRequest) {
         await supabase.from('badge_claims').upsert(
           {
             user_id: profile.id,
-            family: award.family as 'frontend' | 'backend' | 'docs' | 'ideas' | 'community',
+      family: award.family as 'frontend' | 'backend' | 'docs' | 'community',
             tier: badgeTier as 'imp' | 'fiend' | 'overlord' | 'demon king',
             status: 'available' as const,
           },

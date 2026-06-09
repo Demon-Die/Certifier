@@ -11,7 +11,7 @@ export async function GET() {
   const supabase = createAdminClient();
   const { data: profile, error } = await supabase
     .from('profiles')
-    .select('points_frontend, points_backend, points_docs, points_ideas, points_community, role')
+    .select('points_frontend, points_backend, points_docs, points_community, role')
     .eq('id', session.user.id)
     .single();
 

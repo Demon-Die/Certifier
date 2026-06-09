@@ -1,4 +1,4 @@
-export const VALID_FAMILIES = ['frontend', 'backend', 'docs', 'ideas', 'community'] as const;
+export const VALID_FAMILIES = ['frontend', 'backend', 'docs', 'community'] as const;
 export type Family = (typeof VALID_FAMILIES)[number];
 
 export const VALID_TIERS = ['imp', 'fiend', 'overlord', 'demon king'] as const;
