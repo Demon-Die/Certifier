@@ -37,31 +37,31 @@ family:tier
 
 For example:
 
-| Label | Points | Family |
-|-------|:------:|--------|
-| `frontend:imp` | 1 | Frontend |
-| `backend:fiend` | 3 | Backend |
-| `docs:overlord` | 9 | Documentation |
-| `ideas:demon king` | 27 | Ideas |
+| Label              | Points | Family        |
+| ------------------ | :----: | ------------- |
+| `frontend:imp`     |   1    | Frontend      |
+| `backend:fiend`    |   3    | Backend       |
+| `docs:overlord`    |   9    | Documentation |
+| `ideas:demon king` |   27   | Ideas         |
 
 ### Valid Families
 
-| Family | Label prefix | What it covers |
-|--------|:-----------:|----------------|
-| Frontend | `frontend` | UI code, components, CSS, accessibility |
-| Backend | `backend` | Server logic, APIs, databases |
-| Documentation | `docs` | Docs, tutorials, translations, README |
-| Ideas | `ideas` | Feature proposals, UX research, design |
-| Community | `community` | Issue triage, reviews, CI/CD, support |
+| Family        | Label prefix | What it covers                          |
+| ------------- | :----------: | --------------------------------------- |
+| Frontend      |  `frontend`  | UI code, components, CSS, accessibility |
+| Backend       |  `backend`   | Server logic, APIs, databases           |
+| Documentation |    `docs`    | Docs, tutorials, translations, README   |
+| Ideas         |   `ideas`    | Feature proposals, UX research, design  |
+| Community     | `community`  | Issue triage, reviews, CI/CD, support   |
 
 ### Valid Tiers
 
-| Tier | Label suffix | Points per PR | Badge threshold |
-|------|:----------:|:------------:|:---------------:|
-| Imp | `imp` | 1 | 5 |
-| Fiend | `fiend` | 3 | 15 |
-| Overlord | `overlord` | 9 | 45 |
-| Demon King | `demon king` | 27 | 135 |
+| Tier       | Label suffix | Points per PR | Badge threshold |
+| ---------- | :----------: | :-----------: | :-------------: |
+| Imp        |    `imp`     |       1       |        5        |
+| Fiend      |   `fiend`    |       3       |       15        |
+| Overlord   |  `overlord`  |       9       |       45        |
+| Demon King | `demon king` |      27       |       135       |
 
 ## Setting Up Labels
 
@@ -103,17 +103,17 @@ When reviewing a PR, add the appropriate label based on the contribution.
 
 Examples:
 
-| PR Description | Appropriate Label |
-|----------------|-------------------|
-| Adds a new button component | `frontend:imp` |
-| Fixes responsive layout bug | `frontend:imp` |
-| Builds a new API endpoint | `backend:fiend` |
-| Writes migration scripts | `backend:imp` |
-| Updates README with setup guide | `docs:imp` |
-| Writes API documentation | `docs:fiend` |
-| Proposes a new feature spec | `ideas:imp` |
-| Reviews 10+ PRs thoroughly | `community:fiend` |
-| Sets up CI/CD pipeline | `community:overlord` |
+| PR Description                  | Appropriate Label    |
+| ------------------------------- | -------------------- |
+| Adds a new button component     | `frontend:imp`       |
+| Fixes responsive layout bug     | `frontend:imp`       |
+| Builds a new API endpoint       | `backend:fiend`      |
+| Writes migration scripts        | `backend:imp`        |
+| Updates README with setup guide | `docs:imp`           |
+| Writes API documentation        | `docs:fiend`         |
+| Proposes a new feature spec     | `ideas:imp`          |
+| Reviews 10+ PRs thoroughly      | `community:fiend`    |
+| Sets up CI/CD pipeline          | `community:overlord` |
 
 ### 3. Merge the PR
 
@@ -127,15 +127,15 @@ a threshold, a badge row is created automatically.
 
 **Example progression for Frontend:**
 
-| Action | Points | Total | Badge unlocked |
-|--------|:------:|:-----:|:--------------:|
-| Merge PR with `frontend:imp` | +1 | 1 | — |
-| Merge PR with `frontend:imp` | +1 | 2 | — |
-| Merge PR with `frontend:imp` | +1 | 3 | — |
-| Merge PR with `frontend:fiend` | +3 | 6 | ✅ Imp |
-| Merge PR with `frontend:fiend` | +3 | 9 | — |
-| ... | | | |
-| Merge PR with `frontend:overlord` | +9 | 15 | ✅ Fiend |
+| Action                            | Points | Total | Badge unlocked |
+| --------------------------------- | :----: | :---: | :------------: |
+| Merge PR with `frontend:imp`      |   +1   |   1   |       —        |
+| Merge PR with `frontend:imp`      |   +1   |   2   |       —        |
+| Merge PR with `frontend:imp`      |   +1   |   3   |       —        |
+| Merge PR with `frontend:fiend`    |   +3   |   6   |     ✅ Imp     |
+| Merge PR with `frontend:fiend`    |   +3   |   9   |       —        |
+| ...                               |        |       |                |
+| Merge PR with `frontend:overlord` |   +9   |  15   |    ✅ Fiend    |
 
 ## Important Notes
 
@@ -177,6 +177,7 @@ VALUES (
 ## Verifying Awards
 
 After merge:
+
 1. Ask the contributor to check their dashboard at `/dashboard`
 2. The contribution appears in their **Contributions** table
 3. Points update on their **Family Progress** cards

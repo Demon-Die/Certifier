@@ -24,11 +24,11 @@ in a family, a badge becomes available to claim.
 
 ## How Points Work
 
-| Action | Points |
-|--------|:------:|
-| Merge a PR labeled `frontend:imp` | +1 Frontend |
-| Merge a PR labeled `frontend:fiend` | +3 Frontend |
-| Merge a PR labeled `frontend:overlord` | +9 Frontend |
+| Action                                   |    Points    |
+| ---------------------------------------- | :----------: |
+| Merge a PR labeled `frontend:imp`        | +1 Frontend  |
+| Merge a PR labeled `frontend:fiend`      | +3 Frontend  |
+| Merge a PR labeled `frontend:overlord`   | +9 Frontend  |
 | Merge a PR labeled `frontend:demon king` | +27 Frontend |
 
 (The same pattern applies to all five families: frontend, backend, docs,
@@ -36,12 +36,12 @@ ideas, and community.)
 
 ### Badge Thresholds
 
-| Tier | Points Needed |
-|------|:------------:|
-| Imp | 5 |
-| Fiend | 15 |
-| Overlord | 45 |
-| Demon King | 135 |
+| Tier       | Points Needed |
+| ---------- | :-----------: |
+| Imp        |       5       |
+| Fiend      |      15       |
+| Overlord   |      45       |
+| Demon King |      135      |
 
 So if you earn 5 Frontend points, you unlock the **Frontend - Imp** badge.
 At 15 points, **Frontend - Fiend** unlocks, and so on.
@@ -75,20 +75,25 @@ At 15 points, **Frontend - Fiend** unlocks, and so on.
 ## Troubleshooting
 
 ### "No badges available to claim"
+
 You haven't accumulated enough points yet in any family. Keep contributing!
 Check the Family Progress cards to see how close you are.
 
 ### Claim button is disabled
+
 You may have already claimed that badge tier. Each tier (Imp, Fiend, etc.)
 can only be claimed once per family.
 
 ### "View credential" shows an error
+
 If certifier.io templates are not configured, the badge is still recorded
 in the system — it just won't have a digital credential page yet.
 The claim still counts and the badge shows on your dashboard.
 
 ### Points aren't updating
+
 Points are awarded when a PR with a valid label is merged. Ensure:
+
 - The PR has a label in the format `family:tier` (e.g., `frontend:imp`)
 - The webhook is configured and working
 - You've refreshed the dashboard

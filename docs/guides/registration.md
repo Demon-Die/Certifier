@@ -51,13 +51,13 @@ You're redirected to your dashboard at `/dashboard` where you'll see:
 When you sign in for the first time, the system creates a record in the
 `profiles` table with:
 
-| Field | Source |
-|-------|--------|
-| `id` | Your GitHub user ID (numeric) |
-| `github_username` | Your GitHub username |
-| `display_name` | Your GitHub display name |
-| `avatar_url` | Your GitHub avatar |
-| `created_at` | Timestamp of first sign-in |
+| Field             | Source                        |
+| ----------------- | ----------------------------- |
+| `id`              | Your GitHub user ID (numeric) |
+| `github_username` | Your GitHub username          |
+| `display_name`    | Your GitHub display name      |
+| `avatar_url`      | Your GitHub avatar            |
+| `created_at`      | Timestamp of first sign-in    |
 
 This same profile is what the webhook looks up when it awards points —
 it matches by `github_username` from the PR author's login.

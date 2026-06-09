@@ -73,7 +73,9 @@ const faqSections = [
         <br />
         1. Verifies the HMAC-SHA256 signature to confirm it&apos;s from GitHub
         <br />
-        2. Checks the PR&apos;s labels for a valid <code className="text-primary">family:tier</code>{' '}
+        2. Checks the PR&apos;s labels for a valid <code className="text-primary">
+          family:tier
+        </code>{' '}
         match
         <br />
         3. Looks up the contributor profile by the PR author&apos;s GitHub username
@@ -113,7 +115,7 @@ const faqSections = [
     a: 'Yes, the leaderboard at /leaderboard shows all contributors who have earned at least one point, sorted by total points across all families. Any visitor can view it without signing in.',
   },
   {
-    q: 'Why didn\'t my points show up after a merge?',
+    q: "Why didn't my points show up after a merge?",
     a: (
       <>
         Common reasons:
@@ -136,7 +138,8 @@ const faqSections = [
     q: 'How do maintainers set up the webhook for a new org?',
     a: (
       <>
-        In the Admin settings at <code className="text-primary">/admin</code>, maintainers configure:
+        In the Admin settings at <code className="text-primary">/admin</code>, maintainers
+        configure:
         <br />
         1. The GitHub org name
         <br />
@@ -210,9 +213,7 @@ export default function FAQPage() {
             <p className="text-primary text-xs tracking-widest uppercase mb-1">
               DemonDie Certifier — Help
             </p>
-            <h1 className="font-sans text-headline text-foreground">
-              Frequently Asked Questions
-            </h1>
+            <h1 className="font-sans text-headline text-foreground">Frequently Asked Questions</h1>
             <p className="text-on-surface-variant text-xs mt-2">
               Common questions about earning points, claiming badges, and contributing.
             </p>
