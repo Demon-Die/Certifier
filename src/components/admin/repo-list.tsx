@@ -17,10 +17,12 @@ export function RepoList({ repos, onChange, errors = [] }: RepoListProps) {
   // Use parent as source of truth — sync when prop actually changes
   const [localRepos, setLocalRepos] = useState<string[]>(repos);
   const [repoErrors, setRepoErrors] = useState<Record<number, string>>({});
+  const reposKey = JSON.stringify(repos);
 
   useEffect(() => {
     setLocalRepos(repos);
-  }, [JSON.stringify(repos)]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reposKey]);
 
   const validateRepo = (value: string, index: number): string | null => {
     if (!value.trim()) {
