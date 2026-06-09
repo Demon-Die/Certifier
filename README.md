@@ -172,7 +172,7 @@ Visit [http://localhost:3000](http://localhost:3000) and sign in with GitHub.
 ## Points & Tiers
 
 Badges are earned by accumulating points within each family. Points come from
-merged PRs — the label determines the family and tier.
+merged PRs — the label determines the family and tier. ONLY LABELS OF PR WILL BE COUNTED!
 
 ### Thresholds
 
