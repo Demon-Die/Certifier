@@ -35,7 +35,6 @@ That's it. Your profile is created automatically, and you're ready to start earn
 
 - [How It Works](#how-it-works)
 - [Tech Stack](#tech-stack)
-- [Setup](#setup)
 - [Points & Tiers](#points--tiers)
 - [Roles & Permissions](#roles--permissions)
 - [Architecture](#architecture)
@@ -67,125 +66,6 @@ That's it. Your profile is created automatically, and you're ready to start earn
 | **Badging** | certifier.io REST API (digital credentials) |
 | **CI/CD** | GitHub Actions + Vercel |
 
-## Setup
-
-### Prerequisites
-
-- Node.js 20+
-- A [Supabase](https://supabase.com) project
-- A [GitHub OAuth App](https://github.com/settings/developers)
-- (Optional) A [certifier.io](https://certifier.io) account for digital
-  credential issuance
-
-### 1. Clone and install
-
-```bash
-git clone https://github.com/DemonDie/certifier
-cd certifier
-npm ci
-```
-
-### 2. Environment variables
-
-Copy `.env.example` to `.env.local`:
-
-```bash
-cp .env.example .env.local
-```
-
-Required variables:
-
-| Variable | Description |
-|----------|-------------|
-| `AUTH_SECRET` | NextAuth encryption key (`openssl rand -base64 32`) |
-| `AUTH_GITHUB_ID` | GitHub OAuth App client ID |
-| `AUTH_GITHUB_SECRET` | GitHub OAuth App client secret |
-| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anonymous key |
-| `SUPABASE_SERVICE_ROLE_KEY` | Supabase service role key (admin operations) |
-
-Optional variables:
-
-| Variable | Description |
-|----------|-------------|
-| `CERTIFIER_ACCOUNTS` | JSON array of certifier.io account configurations (preferred format) |
-| `CERTIFIER_API_KEY` | Certifier API access token (legacy, use `CERTIFIER_ACCOUNTS` instead) |
-| `CERTIFIER_TEMPLATES` | JSON mapping of `family:tier` → group IDs (legacy, use `CERTIFIER_ACCOUNTS` instead) |
-
-### 3. GitHub OAuth App
-
-Create a GitHub OAuth App at **Settings → Developer Settings → OAuth Apps**:
-
-- Homepage URL: `http://localhost:3000`
-- Authorization callback URL: `http://localhost:3000/api/auth/callback`
-- For production, replace `localhost` with your deployed URL
-
-### 4. Supabase
-
-1. Create a Supabase project at [supabase.com](https://supabase.com)
-2. Run migrations in order:
-
-   ```bash
-   supabase migration up
-   ```
-
-   Or apply manually via SQL editor:
-   - `supabase/migrations/001_initial_schema.sql`
-   - `supabase/migrations/002_rls_policies.sql`
-   - `supabase/migrations/003_realtime.sql`
-   - `supabase/migrations/004_helper_functions.sql`
-   - `supabase/migrations/005_seed_special_badges.sql`
-   - `supabase/migrations/006_certifier_accounts.sql`
-   - `supabase/migrations/007_fix_user_id_types.sql`
-
-3. Enable Realtime on `profiles` and `badge_claims` tables
-
-### 5. Run locally
-
-```bash
-npm run dev
-```
-
-Visit [http://localhost:3000](http://localhost:3000) and sign in with GitHub.
-
-### 6. Admin setup
-
-1. Sign in with your GitHub account
-2. Set your role to `admin` in Supabase:
-
-   ```sql
-   UPDATE profiles SET role = 'admin' WHERE github_username = 'your-username';
-   ```
-
-3. Visit `/admin` to configure:
-   - GitHub org / username
-   - Tracked repos (`owner/repo` format)
-   - Webhook secret
-
-### 7. GitHub webhook
-
-1. Go to your GitHub repo → **Settings → Webhooks → Add webhook**
-2. Payload URL: `https://your-app.vercel.app/api/webhooks/github`
-3. Content type: `application/json`
-4. Secret: The webhook secret you configured in admin settings
-5. Events: **Pull requests** (select)
-6. Add labels like `frontend:imp` to merged PRs to award points
-
-### 8. Certifier.io (optional)
-
-1. Create an account at [certifier.io](https://certifier.io)
-2. Create badge templates (5 families × 4 tiers = 20 templates)
-3. Create an API access token: **Settings → Developers → Access Tokens**
-4. Map template group IDs in `CERTIFIER_TEMPLATES`:
-
-   ```json
-   {
-     "frontend:imp": "grp_xxx",
-     "frontend:fiend": "grp_yyy",
-     ...
-   }
-   ```
-
 ## Points & Tiers
 
 Badges are earned by accumulating points within each family. Points come from
@@ -207,7 +87,6 @@ merged PRs — the label determines the family and tier.
 | **Frontend** | 🎨 | UI code, components, accessibility |
 | **Backend** | ⚙️ | Server logic, APIs, databases |
 | **Documentation** | 📚 | Docs, tutorials, translations |
-| **Ideas** | 💡 | Feature proposals, UX research |
 | **Community** | 🤝 | Support, reviews, CI/CD |
 
 ## Roles & Permissions
