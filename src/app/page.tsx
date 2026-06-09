@@ -42,7 +42,7 @@ export default function Home() {
             <span className="text-primary">open source</span> contributions
           </h1>
           <p className="font-mono text-sm text-on-surface-variant max-w-lg mx-auto">
-            Track your contributions across frontend, backend, docs, ideas, and community. Level up
+            Track your contributions across frontend, backend, docs, and community. Level up
             from Imp to Demon King and claim verifiable credentials.
           </p>
         </div>

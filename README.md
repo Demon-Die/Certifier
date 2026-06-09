@@ -11,9 +11,23 @@
 
 ## Live Demo
 
-**→ https://certifier-demondie.vercel.app/**
+**→ [View the Live Demo](https://certifier-demondie.vercel.app/)**
 
 Sign in with GitHub to see your dashboard, track points, and claim badges.
+
+---
+
+## Quick Start for Newcomers
+
+New to the project? Get up and running in three steps:
+
+1. **Visit the app** at [certifier-demondie.vercel.app](https://certifier-demondie.vercel.app/)
+2. **Click "Sign in with GitHub"** — no forms, no passwords, just one click
+3. **You're in!** Your dashboard shows your points, progress, and available badges
+
+That's it. Your profile is created automatically, and you're ready to start earning badges as your PRs get merged.
+
+> **Already signed in?** Head to the [dashboard](https://certifier-demondie.vercel.app/dashboard) to check your progress.
 
 ---
 
@@ -94,8 +108,9 @@ Optional variables:
 
 | Variable | Description |
 |----------|-------------|
-| `CERTIFIER_API_KEY` | Certifier API access token |
-| `CERTIFIER_TEMPLATES` | JSON mapping of `family:tier` → group IDs |
+| `CERTIFIER_ACCOUNTS` | JSON array of certifier.io account configurations (preferred format) |
+| `CERTIFIER_API_KEY` | Certifier API access token (legacy, use `CERTIFIER_ACCOUNTS` instead) |
+| `CERTIFIER_TEMPLATES` | JSON mapping of `family:tier` → group IDs (legacy, use `CERTIFIER_ACCOUNTS` instead) |
 
 ### 3. GitHub OAuth App
 
@@ -120,6 +135,8 @@ Create a GitHub OAuth App at **Settings → Developer Settings → OAuth Apps**:
    - `supabase/migrations/003_realtime.sql`
    - `supabase/migrations/004_helper_functions.sql`
    - `supabase/migrations/005_seed_special_badges.sql`
+   - `supabase/migrations/006_certifier_accounts.sql`
+   - `supabase/migrations/007_fix_user_id_types.sql`
 
 3. Enable Realtime on `profiles` and `badge_claims` tables
 
@@ -255,11 +272,12 @@ merged PRs — the label determines the family and tier.
 
 | Document | Description |
 |----------|-------------|
-| [CONTRIBUTING.md](CONTRIBUTING.md) | How to contribute, PR workflow, label convention |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | How to contribute, PR workflow, and label conventions |
 | [SECURITY.md](SECURITY.md) | Security policy and vulnerability reporting |
 | [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) | Community standards and enforcement |
-| [Guides: Claiming Badges](docs/guides/claiming-badges.md) | Step-by-step for contributors to claim their earned badges |
-| [Guides: Maintainer Labels](docs/guides/maintainer-labels.md) | Label format, setup, and point award system for maintainers |
+| [Registration Guide](docs/guides/registration.md) | How contributors sign up and create a profile |
+| [Claiming Badges Guide](docs/guides/claiming-badges.md) | Step-by-step for claiming your earned badges |
+| [Maintainer Labels Guide](docs/guides/maintainer-labels.md) | Label format, setup, and point award system |
 | [LICENSE](LICENSE) | MIT license |
 
 ## License

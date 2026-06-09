@@ -1,7 +1,8 @@
 # Registration Guide: How to Join the Badge Program
 
-How contributors create their profile and start earning badges by
-signing in with GitHub.
+> This guide is for contributors who want to join the badge program. It walks
+> you through creating a profile and getting started with earning digital
+> credentials.
 
 ---
 
@@ -12,7 +13,7 @@ The badge program uses **GitHub OAuth** to identify you. When you sign in:
 1. GitHub authorizes the app to see your public profile (username, avatar)
 2. A contributor profile is **automatically created** in the database
 3. Your **GitHub username** becomes your identifier in the system
-4. You land on your dashboard showing points and badges
+4. You land on your [dashboard](https://certifier-demondie.vercel.app/dashboard) showing points and badges
 
 You don't need to fill out a form, create a password, or wait for approval.
 
@@ -20,7 +21,7 @@ You don't need to fill out a form, create a password, or wait for approval.
 
 ### 1. Visit the App
 
-Go to **[https://certifier-demondie.vercel.app](https://certifier-demondie.vercel.app)**
+Go to [certifier-demondie.vercel.app](https://certifier-demondie.vercel.app)
 
 ### 2. Click "Sign in with GitHub"
 
@@ -38,7 +39,7 @@ Click **Authorize**.
 
 ### 4. You're In
 
-You're redirected to your dashboard at `/dashboard` where you'll see:
+You're redirected to your [dashboard](https://certifier-demondie.vercel.app/dashboard) where you'll see:
 
 - **Stats cards** — total points, active families, badges claimed
 - **Family Progress** — per-category points with progress bars toward tiers
@@ -71,9 +72,9 @@ it matches by `github_username` from the PR author's login.
 
 Once signed in, you can:
 
-- **Merge PRs with labels** to earn points (see [maintainer-labels.md](./maintainer-labels.md))
-- **View progress** on your dashboard at `/dashboard`
-- **Claim badges** once you hit a tier threshold (see [claiming-badges.md](./claiming-badges.md))
+- **Merge PRs with labels** to earn points — see the [Maintainer Labels Guide](./maintainer-labels.md) for details on the labeling system
+- **View progress** on your [dashboard](https://certifier-demondie.vercel.app/dashboard)
+- **Claim badges** once you hit a tier threshold — see the [Claiming Badges Guide](./claiming-badges.md) for the full process
 - **View leaderboard** at `/leaderboard` to see top contributors
 - **Browse badges** at `/badges` to see all available credentials
 
@@ -105,3 +106,12 @@ you contribute with.
 ---
 
 **Need help?** Open an issue in the repository or ask a maintainer.
+
+---
+
+## Related Documents
+
+- [Maintainer Labels Guide](./maintainer-labels.md) — How points are earned through PR labels
+- [Claiming Badges Guide](./claiming-badges.md) — What to do after you've earned enough points
+- [README.md](../../README.md) — Full project overview and architecture
+- [CONTRIBUTING.md](../../CONTRIBUTING.md) — How to contribute to this project

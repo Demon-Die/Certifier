@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const faqSections = [
   {
     q: 'What is the Badge Program?',
-    a: 'The DemonDie Certifier is a terminal-themed badge system that rewards open source contributors. When you merge a PR with a labeled contribution type, you earn points across five families: frontend, backend, docs, ideas, and community. Each family has four tiers — Imp, Fiend, Overlord, Demon King — and you unlock them as you accumulate points.',
+    a: 'The DemonDie Certifier is a terminal-themed badge system that rewards open source contributors. When you merge a PR with a labeled contribution type, you earn points across four families: frontend, backend, docs, and community. Each family has four tiers — Imp, Fiend, Overlord, Demon King — and you unlock them as you accumulate points.',
   },
   {
     q: 'How do I sign up?',
@@ -31,7 +31,7 @@ const faqSections = [
     q: 'What families are there?',
     a: (
       <>
-        There are five families:
+        There are four families:
         <br />
         <span className="text-primary">frontend</span> — UI code, components, CSS, accessibility
         <br />
@@ -39,9 +39,7 @@ const faqSections = [
         <br />
         <span className="text-primary">docs</span> — Documentation, tutorials, translations, README
         <br />
-        <span className="text-primary">ideas</span> — Feature proposals, UX research, design
-        <br />
-        <span className="text-primary">community</span> — Issue triage, reviews, CI/CD, support
+        <span className="text-primary">community</span> — Issue triage, reviews, feature proposals, CI/CD, support
       </>
     ),
   },

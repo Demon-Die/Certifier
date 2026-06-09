@@ -101,3 +101,12 @@ Points are awarded when a PR with a valid label is merged. Ensure:
 ---
 
 **Need help?** Open an issue in the repository or ask a maintainer.
+
+---
+
+## Related Documents
+
+- [Registration Guide](./registration.md) — How to sign up and create your profile
+- [Maintainer Labels Guide](./maintainer-labels.md) — How points are earned through PR labels
+- [README.md](../../README.md) — Full project overview and architecture
+- [CONTRIBUTING.md](../../CONTRIBUTING.md) — Contribution workflow and PR guidelines

@@ -16,7 +16,7 @@ const sections = [
   {
     title: 'Service Description',
     content:
-      'The Service provides a terminal-based badge system that tracks open source contributions across frontend, backend, docs, ideas, and community categories. Users earn badges by accumulating contribution points and may claim verifiable credentials through certifier.io integration.',
+      'The Service provides a terminal-based badge system that tracks open source contributions across frontend, backend, docs, and community categories. Users earn badges by accumulating contribution points and may claim verifiable credentials through certifier.io integration.',
   },
   {
     title: 'User Accounts',

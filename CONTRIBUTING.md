@@ -13,6 +13,7 @@ system. This guide walks you through the contribution workflow.
 - [Pull Request Guidelines](#pull-request-guidelines)
 - [Label Convention](#label-convention)
 - [Review Process](#review-process)
+- [Related Documents](#related-documents)
 
 ## Code of Conduct
 
@@ -131,7 +132,8 @@ family:tier
 ```
 
 For example: `frontend:imp` awards 1 point to your Frontend score.
-See [Points & Tiers](README.md#points--tiers) for the full breakdown.
+See the [Maintainer Labels Guide](docs/guides/maintainer-labels.md) for the
+full breakdown of label format, valid families, and point thresholds.
 
 > **Note:** Labels are applied by project maintainers after review.
 > If your PR isn't labeled within a few days, feel free to ask.
@@ -150,3 +152,14 @@ you'll earn badges as you accumulate points.
 
 Questions? Open a [discussion](https://github.com/YOUR_USERNAME/certifier/discussions)
 or reach out to the maintainers.
+
+---
+
+## Related Documents
+
+- [Registration Guide](docs/guides/registration.md) — How new contributors sign up for the badge program
+- [Maintainer Labels Guide](docs/guides/maintainer-labels.md) — How PR labels earn points
+- [Claiming Badges Guide](docs/guides/claiming-badges.md) — How to claim your earned badges
+- [README.md](README.md) — Full project setup and architecture overview
+- [SECURITY.md](SECURITY.md) — Security policy and vulnerability reporting
+- [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) — Community standards and enforcement

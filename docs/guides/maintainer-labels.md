@@ -3,6 +3,9 @@
 How to configure and use GitHub labels so the badge program automatically
 awards points when pull requests are merged.
 
+> **New here?** If you're a contributor looking to sign up, see the
+> [Registration Guide](./registration.md) instead.
+
 ---
 
 ## How Automated Point Awards Work
@@ -11,7 +14,7 @@ awards points when pull requests are merged.
 PR merged with label "frontend:imp"
         │
         ▼
-GitHub sends webhook to /api/github/webhook
+GitHub sends webhook to /api/webhooks/github
         │
         ▼
 App parses the label, identifies family + tier
@@ -178,7 +181,7 @@ VALUES (
 
 After merge:
 
-1. Ask the contributor to check their dashboard at `/dashboard`
+1. Ask the contributor to check their [dashboard](https://certifier-demondie.vercel.app/dashboard)
 2. The contribution appears in their **Contributions** table
 3. Points update on their **Family Progress** cards
 4. Badges appear in **Claimable Badges** when thresholds are met
@@ -186,3 +189,12 @@ After merge:
 ---
 
 **Questions?** Reach out to the project admin or open an issue.
+
+---
+
+## Related Documents
+
+- [Registration Guide](./registration.md) — How contributors sign up for the badge program
+- [Claiming Badges Guide](./claiming-badges.md) — What happens after points are earned
+- [README.md](../../README.md) — Full project setup and architecture overview
+- [CONTRIBUTING.md](../../CONTRIBUTING.md) — Contribution workflow and PR guidelines
