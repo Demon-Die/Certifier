@@ -28,6 +28,11 @@ New to the project? Get up and running in three steps:
 That's it. Your profile is created automatically, and you're ready to start earning badges as your PRs get merged.
 
 > **Already signed in?** Head to the [dashboard](https://certifier-demondie.vercel.app/dashboard) to check your progress.
+>
+> 📖 **Read the guides:** [Registration Guide](docs/guides/registration.md) ·
+> [Claiming Badges](docs/guides/claiming-badges.md) ·
+> [Maintainer Labels](docs/guides/maintainer-labels.md) ·
+> [Ideas Contributions](docs/guides/ideas-contributions.md)
 
 ---
 
@@ -87,7 +92,7 @@ merged PRs — the label determines the family and tier.
 | **Frontend** | 🎨 | UI code, components, accessibility |
 | **Backend** | ⚙️ | Server logic, APIs, databases |
 | **Documentation** | 📚 | Docs, tutorials, translations |
-| **Community** | 🤝 | Support, reviews, CI/CD |
+| **Community** | 🤝 | Support, reviews, feature proposals, CI/CD, UX research |
 
 ## Roles & Permissions
 
@@ -134,7 +139,7 @@ merged PRs — the label determines the family and tier.
 | `/api/badges/available` | GET | Badges available to claim |
 | `/api/badges/claimed` | GET | Badges already claimed |
 | `/api/badges/claim` | POST | Claim an available badge |
-| `/api/webhooks/github` | POST | GitHub PR merge webhook |
+| `/api/github/webhook` | POST | GitHub PR merge webhook |
 | `/api/admin/settings` | GET/PUT | Admin configuration |
 | `/api/special-badges/nominate` | POST | Nominate for a special badge |
 | `/api/special-badges/vote` | POST | Vote on a special nomination |
@@ -157,6 +162,8 @@ merged PRs — the label determines the family and tier.
 | [Registration Guide](docs/guides/registration.md) | How contributors sign up and create a profile |
 | [Claiming Badges Guide](docs/guides/claiming-badges.md) | Step-by-step for claiming your earned badges |
 | [Maintainer Labels Guide](docs/guides/maintainer-labels.md) | Label format, setup, and point award system |
+| [Ideas Contributions Guide](docs/guides/ideas-contributions.md) | How to submit ideas as community contributions |
+| [Idea Template](docs/guides/idea-template.md) | Template for submitting a structured idea proposal |
 | [LICENSE](LICENSE) | MIT license |
 
 ## License
