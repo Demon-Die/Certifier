@@ -165,7 +165,7 @@ export default function BadgesPage() {
       </div>
 
       {/* Badge grid: 5 families × 4 tiers */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 justify-center">
         {ALL_FAMILIES.map((family) => {
           const config = getFamilyConfig(family);
           return (
