@@ -155,24 +155,7 @@ a threshold, a badge row is created automatically.
 ## Manual Award (Database)
 
 If a PR was merged without a label, or you need to correct points,
-you can insert a contribution directly:
-
-```sql
-INSERT INTO contributions (user_id, repo, pr_number, pr_title, pr_url,
-                           merged_at, family, tier, points_awarded, label_used)
-VALUES (
-  '216678101',
-  'owner/repo',
-  42,
-  'PR title',
-  'https://github.com/owner/repo/pull/42',
-  '2026-06-01T00:00:00Z',
-  'frontend',
-  'imp',
-  1,
-  'frontend:imp'
-);
-```
+you can insert a contribution directly but will need to contact @Yuvraj-Sarathe to edit sql file and database.
 
 > ⚠️ This requires database access. Prefer labeling PRs correctly
 > at merge time instead.
