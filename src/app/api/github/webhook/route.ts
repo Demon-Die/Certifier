@@ -160,14 +160,50 @@ export async function POST(request: NextRequest) {
           p_points: points,
         }),
       });
-
+      
       if (!rpcRes.ok) {
         const errText = await rpcRes.text();
         console.error(`[webhook] increment_points failed: ${errText}`);
-        results.push({ label: label.label, status: 'partial', error: errText });
-      } else {
-        results.push({ label: label.label, status: 'awarded', points });
+        results.push({ label: label.label, status: 'error', error: errText });
+        continue;
       }
+
+      // 3. Fetch updated total to check badge thresholds
+      const pointsRes = await fetch(
+        `${SUPABASE_URL}/rest/v1/profiles?id=eq.${encodeURIComponent(profileId)}&select=points_${family}`,
+        { headers: { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}` } }
+      );
+
+      if (pointsRes.ok) {
+        const rows = await pointsRes.json() as Array<Record<string, number>>;
+        const totalPoints = rows[0]?.[`points_${family}`] ?? 0;
+
+        const BADGE_THRESHOLDS: Record<string, number> = {
+          imp: 5, fiend: 15, overlord: 45, 'demon king': 135,
+        };
+
+        for (const [tier, threshold] of Object.entries(BADGE_THRESHOLDS)) {
+          if (totalPoints >= threshold) {
+            await fetch(`${SUPABASE_URL}/rest/v1/badge_claims`, {
+              method: 'POST',
+              headers: {
+                apikey: SERVICE_KEY,
+                Authorization: `Bearer ${SERVICE_KEY}`,
+                'Content-Type': 'application/json',
+                Prefer: 'resolution=ignore-duplicates',
+              },
+              body: JSON.stringify({
+                user_id: profileId,
+                family,
+                tier,
+                status: 'available',
+              }),
+            });
+          }
+        }
+      }
+
+      results.push({ label: label.label, status: 'awarded', points });
     }
 
     return NextResponse.json({ ok: true, results });
