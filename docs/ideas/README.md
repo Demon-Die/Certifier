@@ -1,3 +1,3 @@
-Add your ideas here!!
+Add your ideas here in this folder!!
 
-This dir Must be in every repo!
+**THIS FOLDER MUST BE IN EVERY REPO!**
