@@ -160,7 +160,7 @@ export async function POST(request: NextRequest) {
           p_points: points,
         }),
       });
-      
+
       if (!rpcRes.ok) {
         const errText = await rpcRes.text();
         console.error(`[webhook] increment_points failed: ${errText}`);
@@ -175,11 +175,14 @@ export async function POST(request: NextRequest) {
       );
 
       if (pointsRes.ok) {
-        const rows = await pointsRes.json() as Array<Record<string, number>>;
+        const rows = (await pointsRes.json()) as Array<Record<string, number>>;
         const totalPoints = rows[0]?.[`points_${family}`] ?? 0;
 
         const BADGE_THRESHOLDS: Record<string, number> = {
-          imp: 5, fiend: 15, overlord: 45, 'demon king': 135,
+          imp: 5,
+          fiend: 15,
+          overlord: 45,
+          'demon king': 135,
         };
 
         for (const [tier, threshold] of Object.entries(BADGE_THRESHOLDS)) {
