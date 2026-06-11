@@ -61,14 +61,11 @@ export const authOptions: AuthOptions = {
           })
           .eq('id', existing.id);
       } else {
-        // Create profile on first sign-in
-        const { error } = await supabase
-          .from('profiles')
-          .insert({
-            id: githubProfile.id.toString(),
-            github_username: githubProfile.login,
-            role: 'contributor',
-          });
+        const { error } = await supabase.from('profiles').insert({
+          id: githubProfile.id.toString(),
+          github_username: githubProfile.login,
+          role: 'contributor',
+        });
 
         if (error) {
           console.error('[auth] Profile creation failed:', error);
@@ -107,10 +104,7 @@ export const authOptions: AuthOptions = {
             token.sub = profileData.id;
             token.role = profileData.role ?? 'contributor';
           } else {
-            console.warn(
-              'JWT: no profile found for',
-              token.githubUsername,
-            );
+            console.warn('JWT: no profile found for', token.githubUsername);
             token.role = 'contributor';
           }
         } catch (err) {
@@ -130,9 +124,7 @@ export const authOptions: AuthOptions = {
           githubAccessToken: token.githubAccessToken as string,
           githubId: token.githubId as number,
           githubUsername: token.githubUsername as string,
-          role:
-            (token.role as 'contributor' | 'maintainer' | 'admin') ??
-            'contributor',
+          role: (token.role as 'contributor' | 'maintainer' | 'admin') ?? 'contributor',
         } as any; // eslint-disable-line @typescript-eslint/no-explicit-any
       }
 
